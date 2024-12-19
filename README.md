@@ -1,61 +1,108 @@
 # 🌟 MyDailyHadeeth
 
-**"May Allah brighten the face of a person who hears my statement, understands it, preserves it, and conveys it."**
+This project embodies the noble Hadith:
 
-MyDailyHadeeth is a web application that brings you a daily Hadeeth in both Arabic and English. The app provides metadata, explanations, and word meanings, delivering a complete learning experience. Powered by a Flask backend and a React frontend, it ensures seamless functionality and responsiveness.
+> **"May Allah ﷻ beautify a man who hears a saying of mine, so he understands it, remembers it, and conveys it."**
 
----
+MyDailyHadeeth automates the sharing of a daily Hadeeth in Arabic and English. The app leverages Flask for the backend and React for the frontend, serving as a platform to disseminate authentic Islamic knowledge effectively. This project is powered by the [HadeethEnc API](https://hadeethenc.com/en/home) and utilizes the Hadeeth dataset provided by them. **Note**: We will be pulling the most recent dataset everynow and then.
 
-## ✨ Features
-- 📖 Fetches a new Hadeeth daily in Arabic and English.
-- 📝 Displays metadata, explanations, hints, and word meanings.
-- 💻 Responsive frontend for an optimal user experience.
-- 🔗 Backend ensures smooth API communication and data handling.
+**Check it out at:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
 
 ---
 
-## 🛠️ Technologies Used
-- **Backend**: Python, Flask
-- **Frontend**: React, Axios, TailwindCSS
+## 🕌 **Purpose of the Project**
+This project aims to spread beneficial knowledge through the daily sharing of Hadith, as inspired by the teachings of the Prophet Muhammad ﷺ. By facilitating easy access to Hadith, we hope to encourage reflection and practice.
 
 ---
 
-## 🚀 Installation
+## **Features**
+- **Daily Hadeeth**: A new Hadeeth is served daily in both Arabic and English.
+- **Metadata and Explanations**: Includes grade, attribution, and an explanation for better understanding.
+- **Frontend and Backend Integration**: Powered by a Flask backend and React frontend.
+- **Optimized API Usage**: Avoids unnecessary API calls by persisting daily Hadeeth data.
 
-### 🔙 Backend Setup
-1. Navigate to the `backend` folder.
+---
+
+## **How to Run the Project**
+
+### **1. Backend Setup**
+
+#### Prerequisites:
+- Python 3.7+
+
+#### Steps:
+1. Clone the repository and navigate to the `backend` directory:
+   ```bash
+   git clone <repository-url>
+   cd MyDailyHadeeth/backend
+   ```
 2. Install dependencies:
    ```bash
-   pip install flask requests flask-cors
+   pip install -r requirements.txt
    ```
-3. Run the backend:
+3. Run the Flask server:
    ```bash
    python app.py
    ```
+4. The backend will be available at `http://127.0.0.1:5000`.
 
-### 🖥️ Frontend Setup
-1. Navigate to the `frontend` folder.
+---
+
+### **2. Frontend Setup**
+
+#### Prerequisites:
+- Node.js and npm
+
+#### Steps:
+1. Navigate to the `frontend` directory:
+   ```bash
+   cd ../frontend
+   ```
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Start the frontend:
+3. Start the React app:
    ```bash
    npm start
    ```
+4. Access the frontend at `http://localhost:3000`.
 
 ---
 
-## 📚 Usage
-- Access the frontend at: [http://localhost:3000](http://localhost:3000).
-- The backend API endpoint for the daily Hadeeth is: [http://127.0.0.1:5000/daily-hadeeth](http://127.0.0.1:5000/daily-hadeeth).
+## **📜 Project Structure**
+```
+MyDailyHadeeth/
+├── backend/
+│   ├── data/
+│   │   ├── data-persistance.json  # JSON file to persist data
+│   │   ├── Hadeeths.xlsx     # Hadeeth dataset as downloaded from HadeethEnc.com 
+│   ├── app.py                # Flask backend
+│   ├── hadith_ids.py         # Hadeeths IDs exttraction from the dataset
+│   ├── data-persistance.json # Persists daily Hadeeth & other data
+│   ├── requirements.txt      # Backend dependencies & for deployment
+│   ├── Procfile              # For deployment
+├── frontend/
+│   ├── src/
+│   │   ├── App.js            # Main React component
+│   │   ├── App.css           # Styling for the app
+├── README.md                 # Documentation
+└── LICENSE                   # Project license
+```
 
 ---
 
-## 📜 License
-This project is licensed under the **MIT License**.
+## **🌍 Deployment**
+- **Frontend**: Hosted on [Vercel](https://vercel.com/).
+- **Backend**: Hosted on [Render](https://render.com/).
 
 ---
 
-Enjoy exploring and sharing the beauty of Hadeeth with **MyDailyHadeeth**! 🌙
+## **🛠️ Future Enhancements**
+1. Implementing a daily emailing service to deliver Hadeeth directly to subscribers.
+2. Enhancing mobile experience for better accessibility and usability.
 
+---
+
+## **🔗 License**
+This project is licensed under the MIT License. Feel free to use, fork, and contribute.
