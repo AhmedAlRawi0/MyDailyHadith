@@ -8,7 +8,7 @@ MyDailyHadith automates the sharing of a daily Hadeeth in Arabic and English. Th
 
 ![MyDailyHadith](https://github.com/user-attachments/assets/9ae625bb-8c6b-40a7-b699-05efcd563d9b)
 
-**Check it out at:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
+**Check it out at _(kindly wait a minute)_:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
 
 ---
 
@@ -101,8 +101,7 @@ MyDailyHadeeth/
 ---
 
 ## **🛠️ Future Enhancements**
-1. Implementing a daily emailing service to deliver Hadeeth directly to subscribers.
-2. Enhancing mobile experience for better accessibility and usability.
+Check [Github Issues](https://github.com/AhmedAlRawi0/MyDailyHadith/issues)
 
 ---
 
