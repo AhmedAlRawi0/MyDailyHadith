@@ -18,6 +18,7 @@ const App = () => {
     const fetchHadeeth = async () => {
       try {
         const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
+        //const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -63,12 +64,19 @@ const App = () => {
                 <li key={index}>{hint}</li>
               ))}
             </ul>
-            <h3 className="text-lg font-medium text-green-600 mt-4">معاني الكلمات:</h3>
-            <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-              {hadeeth.words_meanings_ar.map((item, index) => (
-                <li key={index}><strong>{item.word}:</strong> {item.meaning}</li>
-              ))}
-            </ul>
+            {hadeeth.words_meanings_ar && hadeeth.words_meanings_ar.length > 0 && (
+              <>
+                <h3 className="text-lg font-medium text-green-600 mt-4">معاني الكلمات:</h3>
+                <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                  {hadeeth.words_meanings_ar.map((item, index) => (
+                    <li key={index}>
+                      <strong>{item.word}:</strong> {item.meaning}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
           </section>
           <section className="english bg-gray-50 p-4 rounded shadow-md">
             <h2 className="text-blue-700 text-xl font-semibold mb-4">Hadith</h2>
@@ -81,21 +89,22 @@ const App = () => {
               <h3 className="text-lg font-medium text-blue-600">Explanation:</h3>
               <p className="text-gray-700 text-sm leading-relaxed">{hadeeth.explanation}</p>
             </section>
-            <section className="hints mt-4">
-              <h3 className="text-lg font-medium text-blue-600">Hints:</h3>
-              <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                {hadeeth.hints.map((hint, index) => (
-                  <li key={index}>{hint}</li>
-                ))}
-              </ul>
-            </section>
+            {hadeeth.hints && hadeeth.hints.length > 0 && (
+              <section className="hints mt-4">
+                <h3 className="text-lg font-medium text-blue-600">Benefits:</h3>
+                <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                  {hadeeth.hints.map((hint, index) => (
+                    <li key={index}>{hint}</li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </section>
         </div>
       </main>
       <footer className="text-center mt-8 text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} MyDailyHadith</p>
         <p>
-          Powered by{' '}
+          &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
           <a
             href="https://hadeethenc.com/en/home"
             target="_blank"
@@ -103,12 +112,25 @@ const App = () => {
           >
             <img
               src="HadeethEncLogo.png"
-              alt="https://hadeethenc.com/en/home"
+              alt="HadeethEnc"
+              style={{ height: '20px', verticalAlign: 'middle' }}
+            />
+          </a>{' '}
+          | View on {' '}
+          <a
+            href="https://github.com/AhmedAlRawi0/MyDailyHadith"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="GithubLogo.png"
+              alt="GitHub Repository"
               style={{ height: '20px', verticalAlign: 'middle' }}
             />
           </a>
         </p>
       </footer>
+
     </div>
   );
 };
