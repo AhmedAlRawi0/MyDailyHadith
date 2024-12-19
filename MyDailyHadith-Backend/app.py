@@ -1,9 +1,11 @@
 from flask import Flask, jsonify
 import json
 import requests
+from flask_cors import CORS
 from hadith_ids import get_ids_list
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Path to the JSON file storing the current index
 INDEX_FILE = 'data/current_index.json'

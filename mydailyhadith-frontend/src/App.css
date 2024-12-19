@@ -1,0 +1,87 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('/public/alaqsa.jpg') no-repeat center center fixed; /* Replace with actual image path */
+  background-size: cover;
+  color: #333333; /* Neutral text color for better contrast */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.85); /* Light background for better readability */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #d4af37; /* Gold color to match the Dome of the Rock */
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.hadeeth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.arabic, .english {
+  font-family: 'Amiri', serif; /* Arabic font for authenticity */
+  font-size: 1.3rem;
+  text-align: right;
+  direction: rtl;
+  color: #333333;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9); /* Lighter background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.english {
+  text-align: left;
+  direction: ltr;
+}
+
+.metadata, .explanation, .hints ul, footer {
+  color: #555555; /* Muted text color for additional elements */
+}
+
+h3 {
+  margin-top: 15px;
+  font-size: 1.3rem;
+  color: #b8860b; /* Earthy gold to match the background theme */
+  font-weight: 600;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+ul {
+  margin-top: 10px;
+}
+
+p {
+  line-height: 1.6;
+}
