@@ -6,6 +6,14 @@ const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
   const [error, setError] = useState(null);
 
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
@@ -31,6 +39,7 @@ const App = () => {
     <div className="container">
       <header>
         <h1>Hadith of the Day</h1>
+        <h2>{formattedDate}</h2>
       </header>
       <main>
         <div className="hadeeth grid grid-cols-2 gap-4">
@@ -84,7 +93,21 @@ const App = () => {
         </div>
       </main>
       <footer className="text-center mt-8 text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Hadith Daily</p>
+        <p>&copy; {new Date().getFullYear()} MyDailyHadith</p>
+        <p>
+          Powered by{' '}
+          <a
+            href="https://hadeethenc.com/en/home"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="HadeethEncLogo.png"
+              alt="https://hadeethenc.com/en/home"
+              style={{ height: '20px', verticalAlign: 'middle' }}
+            />
+          </a>
+        </p>
       </footer>
     </div>
   );
