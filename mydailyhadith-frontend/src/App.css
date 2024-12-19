@@ -2,7 +2,7 @@ body {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
-  background: url("/public/AlAqsa.jpg") no-repeat center center fixed;
+  background: url("/public/alaqsa.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #333333; /* Neutral text color for better contrast */
 }
