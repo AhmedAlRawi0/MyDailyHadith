@@ -1,9 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 import json
 import requests
 from flask_cors import CORS
 from hadith_ids import get_ids_list
-from datetime import datetime
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -28,7 +28,7 @@ def update_current_state(index, hadeeth_data):
     with open(INDEX_FILE, 'w') as file:
         json.dump({
             "current_index": index,
-            "last_updated": datetime.now().strftime("%Y-%m-%d"),
+            "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             "last_hadeeth": hadeeth_data
         }, file)
 
@@ -49,7 +49,7 @@ def daily_hadeeth():
     current_index, last_updated, last_hadeeth = get_current_state()
 
     # Check if today's date matches the last_updated date
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     if today != last_updated:
         # Fetch a new Hadeeth
         hadeeth_id = hadeeth_ids[current_index]
@@ -61,10 +61,13 @@ def daily_hadeeth():
         next_index = (current_index + 1) % len(hadeeth_ids)
         update_current_state(next_index, hadeeth_data)
 
-        return jsonify(hadeeth_data)
+        response = make_response(jsonify(hadeeth_data))
+        response.headers['Cache-Control'] = 'no-store'
+        return response
     else:
-        # Return the persisted Hadeeth
-        return jsonify(last_hadeeth)
+        response = make_response(jsonify(last_hadeeth))
+        response.headers['Cache-Control'] = 'no-store'
+        return response
 
 # Run the app
 if __name__ == '__main__':
