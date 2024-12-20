@@ -33,7 +33,7 @@ header h1 {
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.loding,
+.loading,
 .hadeeth {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -43,7 +43,7 @@ header h1 {
 
 .arabic,
 .english {
-  font-family: "Amiri", serif; /* Arabic font for authenticity */
+  font-family: "Amiri", serif; /* Arabic font for authenticity haha */
   font-size: 1.3rem;
   text-align: right;
   direction: rtl;

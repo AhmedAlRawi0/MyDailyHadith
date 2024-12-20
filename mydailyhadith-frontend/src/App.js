@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './App.css';
+import './styling/App.css';
+import Loading from './components/Loading';
+import Error from './components/Error';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -17,8 +19,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
-        //const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
+        //const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
+        const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -29,11 +31,11 @@ const App = () => {
   }, []);
 
   if (error) {
-    return <div className="error">{error}</div>;
-  }
+    return <Error message={error} email="support@soon.com" />;
+  }  
 
   if (!hadeeth) {
-    return <div className="loading">Loading Hadeeth...</div>;
+    return <Loading />;
   }
 
   return (
