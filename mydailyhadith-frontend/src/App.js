@@ -7,6 +7,7 @@ import Error from './components/Error';
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
   const [error, setError] = useState(null);
+  const [isScrolling, setIsScrolling] = useState(true);
 
   const today = new Date();
   const formattedDate = today.toLocaleDateString('en-US', {
@@ -19,8 +20,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
-        //const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
+        //const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
+        const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -28,6 +29,35 @@ const App = () => {
     };
 
     fetchHadeeth();
+  }, []);
+
+  useEffect(() => {
+    let scrollDirection = 1; // 1 for down, -1 for up
+    let scrollInterval;
+
+    if (isScrolling) {
+      scrollInterval = setInterval(() => {
+        const scrollSpeed = scrollDirection === 1 ? 1 : 10; // Down: 1px, Up: 10px
+        window.scrollBy(0, scrollDirection * scrollSpeed);
+
+        if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+          scrollDirection = -1; // Reverse direction when reaching the bottom
+        } else if (window.scrollY <= 0) {
+          scrollDirection = 1; // Reverse direction when reaching the top
+        }
+      }, 40); // scrolling speed
+    }
+
+    return () => clearInterval(scrollInterval); // Cleanup on component unmount
+  }, [isScrolling]);
+
+  const handleMouseClick = () => {
+    setIsScrolling(false); // Stop scrolling on mouse click
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleMouseClick);
+    return () => window.removeEventListener('click', handleMouseClick);
   }, []);
 
   if (error) {
@@ -43,6 +73,7 @@ const App = () => {
       <header>
         <h1>Hadith of the Day</h1>
         <h2>{formattedDate}</h2>
+        <p className="scroll-note">Click anywhere to stop the scrolling.</p>
       </header>
       <main>
         <div className="hadeeth grid grid-cols-2 gap-4">

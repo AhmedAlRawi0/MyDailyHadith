@@ -94,3 +94,11 @@ ul {
 p {
   line-height: 1.6;
 }
+
+.scroll-note {
+  font-size: 0.9rem; 
+  color: #666; 
+  margin-top: 5px; 
+  text-align: center; 
+}
+
