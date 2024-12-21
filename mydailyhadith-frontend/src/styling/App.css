@@ -45,8 +45,16 @@ header h1 {
     grid-template-columns: 1fr; /* Single column for mobile */
   }
 
+  .arabic {
+    order: 1; /* Arabic section appears first on mobile */
+  }
+
+  .english {
+    order: 2; /* English section appears second on mobile */
+  }
+
   .arabic, .english {
-    font-size: 1rem; /* Adjust font size for smaller screens (optional) */
+    font-size: 1.1rem; /* Adjust font size for smaller screens (optional) */
   }
 }
 
