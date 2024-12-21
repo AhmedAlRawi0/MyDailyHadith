@@ -36,28 +36,34 @@ header h1 {
 .loading,
 .hadeeth {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns for desktops */
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns for desktop */
   gap: 20px;
 }
 
-@media (max-width: 768px) {
+/* Ensure Arabic appears in the right column */
+.arabic {
+  order: 2; /* Arabic in the right column on desktop */
+}
+
+/* Ensure English appears in the left column */
+.english {
+  order: 1; /* English in the left column on desktop */
+}
+
+/* Mobile view: stack the columns */
+@media screen and (max-width: 768px) {
   .hadeeth {
-    grid-template-columns: 1fr; /* Single column for mobile */
+    grid-template-columns: 1fr; /* Switch to single-column layout */
   }
 
   .arabic {
-    order: 1; /* Arabic section appears first on mobile */
+    order: 1; /* Arabic appears first on mobile */
   }
 
   .english {
-    order: 2; /* English section appears second on mobile */
-  }
-
-  .arabic, .english {
-    font-size: 1.1rem; /* Adjust font size for smaller screens (optional) */
+    order: 2; /* English appears second on mobile */
   }
 }
-
 
 .arabic,
 .english {
