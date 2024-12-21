@@ -11,6 +11,7 @@ from email.mime.multipart import MIMEMultipart
 import schedule
 import time
 from dotenv import load_dotenv
+import sqlite3
 
 app = Flask(__name__)
 # Enable CORS for all routes and methods
@@ -92,6 +93,12 @@ def send_email(to_email, subject, body):
 
 # Function to send daily Hadith to all subscribed emails
 def send_daily_hadith():
+    subscribers = get_subscribers()  # Retrieve all emails from the data
+
+    if not subscribers:
+        print("No subscribers to send the email to.")
+        return
+
     current_index, last_updated, hadeeth = get_current_state()
 
     # Prepare the email body
@@ -105,26 +112,37 @@ def send_daily_hadith():
     <p>{hadeeth.get('explanation')}</p>
     """
 
-    # Send email to all subscribed users
-    emails = load_emails()
-    for email in emails:
+    for email in subscribers:
         send_email(email, "Daily Hadith", email_body)
 
 # Endpoint to subscribe to email notifications
 @app.route('/subscribe', methods=['POST'])
 def subscribe():
-    data = request.json
-    email = data.get('email')
-    if not email:
-        return jsonify({"error": "Email is required."}), 400
+    """
+    Endpoint to subscribe an email. Checks if the email is already subscribed.
+    """
+    try:
+        data = request.get_json()
+        email = data.get('email')
 
-    emails = load_emails()
-    if email in emails:
-        return jsonify({"message": "You are already subscribed."}), 200
+        if not email:
+            return jsonify({'message': 'Invalid email.'}), 400
 
-    emails.append(email)
-    save_emails(emails)
-    return jsonify({"message": "Subscription successful."}), 201
+        # Check if the email is already subscribed
+        cursor.execute("SELECT * FROM subscribers WHERE email = ?", (email,))
+        existing_email = cursor.fetchone()
+
+        if existing_email:
+            return jsonify({'message': 'Email already subscribed.'}), 200
+
+        # Add the email to the database if not already subscribed
+        cursor.execute("INSERT INTO subscribers (email) VALUES (?)", (email,))
+        conn.commit()
+        return jsonify({'message': 'Successfully subscribed!'}), 200
+
+    except Exception as e:
+        return jsonify({'message': f'Error subscribing: {e}'}), 500
+
 
 # Endpoint to get the daily hadeeth
 @app.route('/daily-hadeeth', methods=['GET'])
@@ -153,7 +171,39 @@ def daily_hadeeth():
         response.headers['Cache-Control'] = 'no-store'
         return response
 
+# Initialize the SQLite database
+conn = sqlite3.connect('subscribers.db', check_same_thread=False)  # Create a database file
+cursor = conn.cursor()
+
+# Create the subscribers table if it doesn't exist
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS subscribers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL
+)
+''')
+conn.commit()
+
+def add_subscriber(email):
+    """
+    Add a subscriber email to the database.
+    """
+    try:
+        cursor.execute("INSERT INTO subscribers (email) VALUES (?)", (email,))
+        conn.commit()
+        return {"message": "Successfully subscribed!"}
+    except sqlite3.IntegrityError:
+        return {"message": "Email already subscribed."}
+
+def get_subscribers():
+    """
+    Retrieve all subscriber emails from the database.
+    """
+    cursor.execute("SELECT email FROM subscribers")
+    return [row[0] for row in cursor.fetchall()]
+
 if __name__ == '__main__':
     # Start the Flask app and scheduler
+    send_daily_hadith()
     while True:
         app.run(debug=True)
