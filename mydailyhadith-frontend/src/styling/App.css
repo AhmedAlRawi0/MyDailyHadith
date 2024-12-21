@@ -119,3 +119,35 @@ p {
   margin-top: 5px; 
   text-align: center; 
 }
+
+.subscription {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.email-input {
+  width: 60%;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.subscribe-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.subscribe-button:hover {
+  background-color: #45a049;
+}
+
+.subscription-message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}

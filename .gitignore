@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+mydailyhadith-frontend/node_modules
 /.pnp
 .pnp.js
 
@@ -22,3 +22,4 @@ yarn-error.log*
 
 __pycache__
 .idea
+.env
