@@ -8,8 +8,6 @@ from datetime import datetime, timezone
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import schedule
-import time
 from dotenv import load_dotenv
 import sqlite3
 
@@ -21,6 +19,7 @@ CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 INDEX_FILE = 'data/data-persistance.json'
 EMAILS_FILE = 'data/emails.json'  # File to store subscribed emails
 
+load_dotenv()
 # Email configuration
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
@@ -204,6 +203,6 @@ def get_subscribers():
 
 if __name__ == '__main__':
     # Start the Flask app and scheduler
-    send_daily_hadith()
+    #send_daily_hadith() # Testing the email sending
     while True:
         app.run(debug=True)
