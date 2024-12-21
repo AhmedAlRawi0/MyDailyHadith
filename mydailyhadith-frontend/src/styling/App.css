@@ -36,10 +36,20 @@ header h1 {
 .loading,
 .hadeeth {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* Two columns for desktops */
   gap: 20px;
-  margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+  .hadeeth {
+    grid-template-columns: 1fr; /* Single column for mobile */
+  }
+
+  .arabic, .english {
+    font-size: 1rem; /* Adjust font size for smaller screens (optional) */
+  }
+}
+
 
 .arabic,
 .english {
@@ -101,4 +111,3 @@ p {
   margin-top: 5px; 
   text-align: center; 
 }
-
