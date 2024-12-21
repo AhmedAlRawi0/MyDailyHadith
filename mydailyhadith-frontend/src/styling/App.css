@@ -2,7 +2,7 @@ body {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
-  background: url("/public/alaqsa.jpg") no-repeat center center fixed;
+  background: url("/public/DotR.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #333333; /* Neutral text color for better contrast */
 }
@@ -99,7 +99,7 @@ h3 {
 
 footer {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 0.9rem;
   color: #555555;
 }
@@ -120,10 +120,10 @@ p {
 }
 
 .scroll-note {
-  font-size: 0.9rem; 
-  color: #666; 
-  margin-top: 5px; 
-  text-align: center; 
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+  text-align: center;
 }
 
 .subscription {
@@ -131,21 +131,38 @@ p {
   text-align: center;
 }
 
+.subscription h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subscription h3 small {
+  font-size: 0.8rem;
+  color: #555;
+  display: block;
+  margin-top: 5px;
+}
+
 .email-input {
-  width: 60%;
-  padding: 10px;
-  margin-right: 10px;
-  border-radius: 4px;
+  width: 320px;
+  padding: 8px 10px;
   border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-right: 10px;
+  margin-top: 7px;
 }
 
 .subscribe-button {
-  padding: 10px 15px;
-  border: none;
-  background-color: #4CAF50;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: #4caf50;
   color: white;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .subscribe-button:hover {
@@ -155,5 +172,5 @@ p {
 .subscription-message {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: #555;
+  color: #2b2b2b;
 }

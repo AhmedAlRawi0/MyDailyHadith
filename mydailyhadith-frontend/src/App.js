@@ -23,7 +23,7 @@ const App = () => {
     const fetchHadeeth = async () => {
       try {
         const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
-        //const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
+        //! const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -62,10 +62,18 @@ const App = () => {
     return () => window.removeEventListener('click', handleMouseClick);
   }, []);
 
+
+
   const handleSubscription = async () => {
     try {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        setSubscriptionMessage('Please enter a valid email address.');
+        return;
+      }
       const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      //! const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
       setSubscriptionMessage(response.data.message);
       setEmail(''); // Clear the email input
     } catch (err) {
@@ -140,60 +148,63 @@ const App = () => {
         </div>
 
         <section className="subscription">
-          <h3>Subscribe to Receive Daily Hadith via Email</h3>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            className="email-input"
-          />
-          <button onClick={handleSubscription} className="subscribe-button">Subscribe</button>
+          Subscribe to Receive Daily Hadith via Email <i>(Check Junk)</i>
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="email-input"
+            />
+            <button onClick={handleSubscription} className="subscribe-button">Subscribe</button>
+          </div>
           {subscriptionMessage && <p className="subscription-message">{subscriptionMessage}</p>}
         </section>
+
       </main>
       <footer className="text-center mt-8 text-gray-500 text-sm">
-  <p>
-    &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
-    <a
-      href="https://hadeethenc.com/en/home"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src="HadeethEncLogo.png"
-        alt="HadeethEnc"
-        style={{ height: '20px', verticalAlign: 'middle' }}
-      />
-    </a>{' '}
-    | View on {' '}
-    <a
-      href="https://github.com/AhmedAlRawi0/MyDailyHadith"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img
-        src="GithubLogo.png"
-        alt="GitHub Repository"
-        style={{ height: '20px', verticalAlign: 'middle' }}
-      />
-    </a>{' '}
-    | <a
-        href="https://docs.google.com/document/d/1g4KOyCPDkplTyzxWCJ9GcllIjWUIBsXbHYzUQuxkqyc/edit?usp=sharing"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        About & Terms
-      </a>{' '}
-    | <a
-        href="https://forms.gle/k2bmiDgvTahbkGb87"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Reach Out
-      </a>
-  </p>
-</footer>
+        <p>
+          &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
+          <a
+            href="https://hadeethenc.com/en/home"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="HadeethEncLogo.png"
+              alt="HadeethEnc"
+              style={{ height: '20px', verticalAlign: 'middle' }}
+            />
+          </a>{' '}
+          | View on {' '}
+          <a
+            href="https://github.com/AhmedAlRawi0/MyDailyHadith"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="GithubLogo.png"
+              alt="GitHub Repository"
+              style={{ height: '20px', verticalAlign: 'middle' }}
+            />
+          </a>{' '}
+          | <a
+            href="https://docs.google.com/document/d/1g4KOyCPDkplTyzxWCJ9GcllIjWUIBsXbHYzUQuxkqyc/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            About & Terms
+          </a>{' '}
+          | <a
+            href="https://forms.gle/k2bmiDgvTahbkGb87"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Reach Out
+          </a>
+        </p>
+      </footer>
 
     </div>
   );
