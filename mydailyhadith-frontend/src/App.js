@@ -180,7 +180,7 @@ const App = () => {
               style={{ height: '20px', verticalAlign: 'middle' }}
             />
           </a>{' '}
-          | View on {' '}
+          | View on  {' '}
           <a
             href="https://github.com/AhmedAlRawi0/MyDailyHadith"
             target="_blank"
