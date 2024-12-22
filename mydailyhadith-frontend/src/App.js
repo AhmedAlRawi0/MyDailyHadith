@@ -22,8 +22,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
-        //! const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
+        //const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
+        const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -62,22 +62,25 @@ const App = () => {
     return () => window.removeEventListener('click', handleMouseClick);
   }, []);
 
-
-
   const handleSubscription = async () => {
     try {
+      // Validate email using a regular expression
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
       if (!emailRegex.test(email)) {
-        setSubscriptionMessage('Please enter a valid email address.');
+        setSubscriptionMessage('⚠️ Please enter a valid email address.');
         return;
       }
-      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      //! const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
-      setSubscriptionMessage(response.data.message);
+  
+      // Make the API call
+      //const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
+      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      setSubscriptionMessage(`✅ ${response.data.message}`);
       setEmail(''); // Clear the email input
     } catch (err) {
-      setSubscriptionMessage('Failed to subscribe. Please try again.');
+      const errorMessage =
+        err.response?.data?.message || 'An unexpected error occurred. Please try again.';
+      setSubscriptionMessage(`❌ Failed to subscribe: ${errorMessage}`);
     }
   };
 
