@@ -4,7 +4,7 @@ import './styling/App.css';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import AnnouncementBanner from './components/AnnouncementBanner';
-import moment from 'moment-hijri'; 
+import moment from 'moment-hijri';
 
 
 const App = () => {
@@ -15,16 +15,32 @@ const App = () => {
   const [isScrolling, setIsScrolling] = useState(true);
   const [language, setLanguage] = useState('English'); // Default language
 
-  const bannerMessage = '🚀 This website is still being improved. Stay tuned for MyDailyVerse! 🌟';
+  const bannerMessage = language === 'English' ? '🚀 This website is still being improved. Stay tuned for MyDailyVerse! 🌟' : '🚀 Ce site est encore en cours d\'amélioration. Restez à l\'écoute pour MyDailyVerse! 🌟';
 
   const today = new Date();
-  const formattedDate = today.toLocaleDateString('en-US', {
+  const formattedDate = today.toLocaleDateString(language === 'French' ? 'fr-FR' : 'en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
   const hijriDate = moment().format('iYYYY/iMMMM/iD'); // Hijri date
+
+  const capitalizeAndFormatFrenchDate = (str) => {
+    if (language === 'French') {
+      const parts = str.split(' ');
+
+      const capitalizedParts = parts.map((word, index) =>
+        index === 0 // Capitalize only the first letter of the first word (weekday)
+          ? word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase('fr-FR')
+          : word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase('fr-FR')
+      );
+
+      const [weekday, day, month, year] = capitalizedParts; // Add commas to separate the parts
+      return `${weekday}, ${day} ${month}, ${year}`;
+    }
+  };
+  const capitalizedFormattedFrenchDate = capitalizeAndFormatFrenchDate(formattedDate);
 
   useEffect(() => {
     const fetchHadeeth = async () => {
@@ -106,7 +122,7 @@ const App = () => {
           <h1>
             {language === 'English' ? 'Hadith of the Day' : 'Hadith du Jour'}
           </h1>
-          <h2>{formattedDate} | {hijriDate}</h2>
+          <h2>{language === 'English' ? formattedDate : capitalizedFormattedFrenchDate} | {hijriDate}</h2>
         </header>
         <main>
           <div className="controls">
@@ -273,7 +289,6 @@ const App = () => {
             </a>
           </p>
         </footer>
-
       </div>
     </>
   );
