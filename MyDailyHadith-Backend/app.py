@@ -113,15 +113,21 @@ def remove_subscriber(email):
 # Function to send email
 def send_email(to_email, subject, body):
     try:
+        # Specify the sender's name and email
+        sender_name = "My Daily Hadith"
+        sender_email = EMAIL_ADDRESS
+        
         message = MIMEMultipart()
-        message["From"] = EMAIL_ADDRESS
+        message["From"] = f"{sender_name} <{sender_email}>"
         message["To"] = to_email
         message["Subject"] = subject
         message.attach(MIMEText(body, "html"))
+        
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.sendmail(EMAIL_ADDRESS, to_email, message.as_string())
+        
         print(f"Email sent to {to_email}")
     except Exception as e:
         print(f"Failed to send email to {to_email}: {e}")
@@ -134,10 +140,10 @@ def send_daily_hadith():
         return
 
     # Get the current state
-    current_index, last_updated, hadeeth = get_current_state()
+    current_index, last_updated, hadeeth, hadeeth_fr = get_current_state()
 
     # Get today's date in a readable format
-    today_date = datetime.now(timezone.utc).strftime("%A, %B %d, %Y")  # e.g., "Saturday, December 23, 2024"
+    today_date = datetime.now().strftime("%A, %B %d, %Y")
 
     # Email HTML content template
     for to_email in subscribers:
@@ -157,7 +163,7 @@ def send_daily_hadith():
                     color: #333;
                 }}
                 .container {{
-                    max-width: 600px;
+                    max-width: 800px;
                     margin: 30px auto;
                     background-color: #fff;
                     border: 10px solid #d4af37;
@@ -241,6 +247,11 @@ def send_daily_hadith():
                 <h2>Explanation:</h2>
                 <p>{hadeeth.get('explanation')}</p>
                 <div class="separator"></div>
+                <h2>Le Hadith:</h2>
+                <p>{hadeeth_fr.get('hadeeth')}</p>
+                <h2>Explication:</h2>
+                <p>{hadeeth_fr.get('explanation')}</p>
+                <div class="separator"></div>
                 <div class="footer">
                     <p>
                         © {datetime.now().year} MyDailyHadith | 
@@ -309,5 +320,5 @@ def daily_hadeeth():
     return response
 
 if __name__ == '__main__':
-    # send_daily_hadith() #! Testing
+    #send_daily_hadith() #! Testing
     app.run(debug=True)
