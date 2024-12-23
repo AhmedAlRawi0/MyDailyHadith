@@ -90,6 +90,18 @@ footer {
   color: #555555; /* Muted text color for additional elements */
 }
 
+.metadata-inline {
+  display: flex; /* Display items inline */
+  justify-content: space-between; /* Distribute spacing evenly */
+  gap: 8px; /* Add space between elements */
+  flex-wrap: wrap; /* Wrap to the next line if content overflows */
+}
+
+.metadata-inline p {
+  margin: 0; /* Remove default paragraph margin */
+}
+
+
 h3 {
   margin-top: 15px;
   font-size: 1.3rem;
@@ -181,6 +193,7 @@ p {
   align-items: center;
   gap: 10px;
   margin: 20px 0;
+  margin-top: -8px;
 }
 
 .toggle-button {

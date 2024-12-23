@@ -1,0 +1,44 @@
+.announcement-banner {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #d4af37; /* Gold color */
+    color: #fff;
+    padding: 5px 15px; /* Adjusted padding */
+    text-align: center;
+    font-size: 0.9rem; /* Smaller font size */
+    font-weight: bold;
+    z-index: 1000; /* Ensure it stays on top */
+    display: flex;
+    justify-content: center; /* Center the text */
+    align-items: center;
+  }
+  
+  .announcement-banner span {
+    flex-grow: 1; /* Ensure the text takes available space */
+    text-align: center; /* Center the text within its area */
+  }
+  
+  .announcement-banner a {
+    color: #fff;
+    text-decoration: underline;
+  }
+  
+  .announcement-banner a:hover {
+    text-decoration: none;
+  }
+  
+  .announcement-banner .close-button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    margin-left: auto; /* Push the button to the left edge */
+    margin-right: 10px; /* Add space between button and screen edge */
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .announcement-banner .close-button:hover {
+    color: #ccc;
+  }

@@ -3,6 +3,9 @@ import axios from 'axios';
 import './styling/App.css';
 import Loading from './components/Loading';
 import Error from './components/Error';
+import AnnouncementBanner from './components/AnnouncementBanner';
+import moment from 'moment-hijri'; 
+
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -12,6 +15,8 @@ const App = () => {
   const [isScrolling, setIsScrolling] = useState(true);
   const [language, setLanguage] = useState('English'); // Default language
 
+  const bannerMessage = '🚀 This website is still being improved. Stay tuned for MyDailyVerse! 🌟';
+
   const today = new Date();
   const formattedDate = today.toLocaleDateString('en-US', {
     weekday: 'long',
@@ -19,12 +24,12 @@ const App = () => {
     month: 'long',
     day: 'numeric',
   });
+  const hijriDate = moment().format('iYYYY/iMMMM/iD'); // Hijri date
 
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
         //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-
         const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
@@ -94,177 +99,183 @@ const App = () => {
   }
 
   return (
-    <div className="container">
-      <header>
-        <h1>
-          {language === 'English' ? 'Hadith of the Day' : 'Hadith du Jour'}
-        </h1>
-        <h2>{formattedDate}</h2>
-      </header>
-      <main>
-        <div className="controls">
-          <button
-            className={`toggle-button ${isScrolling ? 'enabled' : 'disabled'}`}
-            onClick={handleToggleScrolling}
-          >
-            {isScrolling ? 'Disable Scrolling' : 'Enable Scrolling'}
-          </button>
-          <select
-            id="language"
-            value={language}
-            onChange={handleLanguageChange}
-            className="language-dropdown"
-          >
-            <option value="English">English</option>
-            <option value="French">French</option>
-          </select>
-        </div>
-        <div className="hadeeth grid grid-cols-2 gap-4">
-          <section className="arabic bg-gray-50 p-4 rounded shadow-md">
-            <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
-            <p className="font-[Amiri] text-lg text-right leading-relaxed text-gray-800 mb-4">{hadeeth.hadeeth_ar}</p>
-
-            <div className="metadata">
-              <p className="text-gray-600 text-sm"><strong>التخريج:</strong> {hadeeth.attribution_ar}</p>
-              <p className="text-gray-600 text-sm"><strong>الصحة:</strong> {hadeeth.grade_ar}</p>
-            </div>
-
-            <section className="explanation mt-4">
-              <h3 className="text-lg font-medium text-blue-600">الشرح:</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{hadeeth.explanation_ar}</p>
-            </section>
-
-            <h3 className="text-lg font-medium text-green-600 mb-2">الفوائد:</h3>
-            <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-              {hadeeth.hints_ar.map((hint, index) => (
-                <li key={index}>{hint}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="english bg-gray-50 p-4 rounded shadow-md">
-            <h2 className="text-blue-700 text-xl font-semibold mb-4">
-              {language === 'English' ? 'The Hadith' : 'Le Hadith'}
-            </h2>
-            <p className="text-gray-800 text-sm leading-relaxed mb-4">
-              {hadeeth.hadeeth}
-            </p>
-
-            <div className="metadata">
-              <p className="text-gray-600 text-sm">
-                <strong>
-                  {language === 'English' ? 'Attribution' : 'Attribution'}:
-                </strong>{' '}
-                {hadeeth.attribution}
-              </p>
-              <p className="text-gray-600 text-sm">
-                <strong>
-                  {language === 'English' ? 'Grade' : 'Classement'}:
-                </strong>{' '}
-                {hadeeth.grade}
-              </p>
-            </div>
-
-            <section className="explanation mt-4">
-              <h3 className="text-lg font-medium text-blue-600">
-                {language === 'English' ? 'Explanation' : 'Explication'}:
-              </h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
-                {hadeeth.explanation}
-              </p>
-            </section>
-
-            {hadeeth.hints && hadeeth.hints.length > 0 && (
-              <section className="hints mt-4">
-                <h3 className="text-lg font-medium text-blue-600">
-                  {language === 'English' ? 'Benefits' : 'Avantages'}:
-                </h3>
-                <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                  {hadeeth.hints.map((hint, index) => (
-                    <li key={index}>{hint}</li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-          </section>
-        </div>
-
-        <section className="subscription">
-          {language === 'English' ? (
-            <>
-              Subscribe to Receive Daily Hadith via Email <i>(Check Spam)</i>
-            </>
-          ) : (
-            <>
-              Abonnez-vous pour recevoir le hadith quotidien par e-mail <i>(Vérifiez les spams)</i>
-            </>
-          )}
-          <div>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={
-                language === 'English' ? 'Enter your email' : 'Entrez votre e-mail'
-              }
-              className="email-input"
-            />
-            <button onClick={handleSubscription} className="subscribe-button">
-              {language === 'English' ? 'Subscribe' : 'S\'abonner'}
+    <>
+      <AnnouncementBanner message={bannerMessage} />
+      <div className="container">
+        <header>
+          <h1>
+            {language === 'English' ? 'Hadith of the Day' : 'Hadith du Jour'}
+          </h1>
+          <h2>{formattedDate} | {hijriDate}</h2>
+        </header>
+        <main>
+          <div className="controls">
+            <button
+              className={`toggle-button ${isScrolling ? 'enabled' : 'disabled'}`}
+              onClick={handleToggleScrolling}
+            >
+              {language === 'English'
+                ? isScrolling
+                  ? 'Disable Scrolling'
+                  : 'Enable Scrolling'
+                : language === 'French'
+                  ? isScrolling
+                    ? 'Désactiver le défilement'
+                    : 'Activer le défilement'
+                  : ''}
             </button>
+
+            <select
+              id="language"
+              value={language}
+              onChange={handleLanguageChange}
+              className="language-dropdown"
+            >
+              <option value="English">English</option>
+              <option value="French">French</option>
+            </select>
           </div>
-          {subscriptionMessage && (
-            <p className="subscription-message">{subscriptionMessage}</p>
-          )}
-        </section>
+          <div className="hadeeth grid grid-cols-2 gap-4">
+            <section className="arabic bg-gray-50 p-4 rounded shadow-md">
+              <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
+              <p className="font-[Amiri] text-lg text-right leading-relaxed text-gray-800 mb-4">{hadeeth.hadeeth_ar}</p>
 
+              <div className="metadata-inline">
+                <p className="text-gray-600 text-sm" dir="rtl">
+                  <strong>التخريج:</strong> {hadeeth.attribution_ar}، <strong>الصحة:</strong> {hadeeth.grade_ar}
+                </p>
+              </div>
 
-      </main>
-      <footer className="text-center mt-8 text-gray-500 text-sm">
-        <p>
-          &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
-          <a
-            href="https://hadeethenc.com/en/home"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="HadeethEncLogo.png"
-              alt="HadeethEnc"
-              style={{ height: '20px', verticalAlign: 'middle' }}
-            />
-          </a>{' '}
-          | View on  {' '}
-          <a
-            href="https://github.com/AhmedAlRawi0/MyDailyHadith"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="GithubLogo.png"
-              alt="GitHub Repository"
-              style={{ height: '20px', verticalAlign: 'middle' }}
-            />
-          </a>{' '}
-          | <a
-            href="https://docs.google.com/document/d/1g4KOyCPDkplTyzxWCJ9GcllIjWUIBsXbHYzUQuxkqyc/edit?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            About & Terms
-          </a>{' '}
-          | <a
-            href="https://forms.gle/k2bmiDgvTahbkGb87"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Reach Out
-          </a>
-        </p>
-      </footer>
+              <section className="explanation mt-4">
+                <h3 className="text-lg font-medium text-blue-600">الشرح:</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{hadeeth.explanation_ar}</p>
+              </section>
 
-    </div>
+              <h3 className="text-lg font-medium text-green-600 mb-2">الفوائد:</h3>
+              <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                {hadeeth.hints_ar.map((hint, index) => (
+                  <li key={index}>{hint}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="english bg-gray-50 p-4 rounded shadow-md">
+              <h2 className="text-blue-700 text-xl font-semibold mb-4">
+                {language === 'English' ? 'The Hadith' : 'Le Hadith'}
+              </h2>
+              <p className="text-gray-800 text-sm leading-relaxed mb-4">
+                {hadeeth.hadeeth}
+              </p>
+
+              <div className="metadata-inline">
+                <p className="text-gray-600 text-sm">
+                  <strong>
+                    {language === 'English' ? 'Attribution:' : 'Attribution:'}
+                  </strong>{' '}
+                  {hadeeth.attribution}, <strong>{language === 'English' ? 'Grade:' : 'Classement:'}</strong>{' '}
+                  {hadeeth.grade}
+                </p>
+              </div>
+
+              <section className="explanation mt-4">
+                <h3 className="text-lg font-medium text-blue-600">
+                  {language === 'English' ? 'Explanation' : 'Explication'}:
+                </h3>
+                <p className="text-gray-700 text-sm leading-relaxed">
+                  {hadeeth.explanation}
+                </p>
+              </section>
+
+              {hadeeth.hints && hadeeth.hints.length > 0 && (
+                <section className="hints mt-4">
+                  <h3 className="text-lg font-medium text-blue-600">
+                    {language === 'English' ? 'Benefits' : 'Avantages'}:
+                  </h3>
+                  <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                    {hadeeth.hints.map((hint, index) => (
+                      <li key={index}>{hint}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+            </section>
+          </div>
+
+          <section className="subscription">
+            {language === 'English' ? (
+              <>
+                Subscribe to Receive Daily Hadith via Email <i>(Check Spam)</i>
+              </>
+            ) : (
+              <>
+                Abonnez-vous pour recevoir le hadith quotidien par e-mail <i>(Vérifiez les spams)</i>
+              </>
+            )}
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={
+                  language === 'English' ? 'Enter your email' : 'Entrez votre e-mail'
+                }
+                className="email-input"
+              />
+              <button onClick={handleSubscription} className="subscribe-button">
+                {language === 'English' ? 'Subscribe' : 'S\'abonner'}
+              </button>
+            </div>
+            {subscriptionMessage && (
+              <p className="subscription-message">{subscriptionMessage}</p>
+            )}
+          </section>
+        </main>
+        <footer className="text-center mt-8 text-gray-500 text-sm">
+          <p>
+            &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
+            <a
+              href="https://hadeethenc.com/en/home"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="HadeethEncLogo.png"
+                alt="HadeethEnc"
+                style={{ height: '20px', verticalAlign: 'middle' }}
+              />
+            </a>{' '}
+            | View on  {' '}
+            <a
+              href="https://github.com/AhmedAlRawi0/MyDailyHadith"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src="GithubLogo.png"
+                alt="GitHub Repository"
+                style={{ height: '20px', verticalAlign: 'middle' }}
+              />
+            </a>{' '}
+            | <a
+              href="https://docs.google.com/document/d/1g4KOyCPDkplTyzxWCJ9GcllIjWUIBsXbHYzUQuxkqyc/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              About & Terms
+            </a>{' '}
+            | <a
+              href="https://forms.gle/k2bmiDgvTahbkGb87"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Reach Out
+            </a>
+          </p>
+        </footer>
+
+      </div>
+    </>
   );
 };
 
