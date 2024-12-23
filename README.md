@@ -22,9 +22,7 @@ This project aims to spread beneficial knowledge through the daily sharing of Ha
 - **Daily Hadeeth**: A new Hadeeth is served daily in Arabic, English, and French.
 - **Metadata and Explanations**: Includes grade, attribution, and an explanation for better understanding.
 - **Email Subscription**: Users can subscribe to receive the daily Hadeeth via email.
-- **Frontend and Backend Integration**: Powered by a Flask backend and React frontend.
 - **Optimized API Usage**: Avoids unnecessary API calls by persisting daily Hadeeth data.
-- **Email Subscription**: Users can subscribe to receive the daily Hadeeth in their inbox at a specified time.
 - **Responsive Design**: Optimized for both desktop and mobile experiences.
 - **Display Mode**: A scrolling effect for seamless viewing on public screens or digital displays, making it ideal for masjids or Islamic centers.
 - **Secure Data Management**: Hadeeth data is securely stored and managed using MongoDB.
