@@ -2,13 +2,14 @@
 
 This project embodies the noble Hadith:
 
-> **"May Allah ﷻ beautify a man who hears a saying of mine, so he understands it, remembers it, and conveys it."**
+> **"May Allah brighten the person who hears something from us and conveys it as he heard it, for perhaps the one to whom it is conveyed is more mindful than the hearer."**
+<sub>[Authentic Hadith Narrated by At-Termedhy & Others - Sunan At-Termedhy - 2657]</sub>
 
-MyDailyHadith automates the sharing of a daily Hadeeth in Arabic and English. The app leverages Flask for the backend and React for the frontend, serving as a platform to disseminate authentic Islamic knowledge effectively. This project is powered by the [HadeethEnc API](https://hadeethenc.com/en/home) and utilizes the Hadeeth dataset provided by them. **Note**: We will be pulling the most recent dataset everynow and then.
+MyDailyHadith automates the sharing of a daily Hadeeth in Arabic, English and French. The app leverages Flask for the backend and React for the frontend, serving as a platform to disseminate authentic Islamic knowledge effectively. This project is powered by the [HadeethEnc API](https://hadeethenc.com/en/home) and utilizes the Hadeeth dataset provided by them. **Note**: We will be pulling the most recent dataset everynow and then.
 
 ![MyDailyHadith](./mydailyhadith-frontend/public/MDHdemo.gif)
 
-**Check it out at _(kindly wait a minute)_:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
+**Check it out at:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
 
 ---
 
@@ -18,11 +19,13 @@ This project aims to spread beneficial knowledge through the daily sharing of Ha
 ---
 
 ## **Features**
-- **Daily Hadeeth**: A new Hadeeth is served daily in Arabic, English and French.
+- **Daily Hadeeth**: A new Hadeeth is served daily in Arabic, English, and French.
 - **Metadata and Explanations**: Includes grade, attribution, and an explanation for better understanding.
 - **Email Subscription**: Users can subscribe to receive the daily Hadeeth via email.
-- **Frontend and Backend Integration**: Powered by a Flask backend and React frontend.
 - **Optimized API Usage**: Avoids unnecessary API calls by persisting daily Hadeeth data.
+- **Responsive Design**: Optimized for both desktop and mobile experiences.
+- **Display Mode**: A scrolling effect for seamless viewing on public screens or digital displays, making it ideal for masjids or Islamic centers.
+- **Secure Data Management**: Hadeeth data is securely stored and managed using MongoDB.
 
 ---
 
@@ -73,28 +76,6 @@ This project aims to spread beneficial knowledge through the daily sharing of Ha
 
 ---
 
-## **📜 Project Structure**
-```
-MyDailyHadeeth/
-├── backend/
-│   ├── data/
-│   │   ├── data-persistance.json  # JSON file to persist data
-│   │   ├── Hadeeths.xlsx     # Hadeeth dataset as downloaded from HadeethEnc.com 
-│   ├── app.py                # Flask backend
-│   ├── hadith_ids.py         # Hadeeths IDs exttraction from the dataset
-│   ├── data-persistance.json # Persists daily Hadeeth & other data
-│   ├── requirements.txt      # Backend dependencies & for deployment
-│   ├── Procfile              # For deployment
-├── frontend/
-│   ├── src/
-│   │   ├── App.js            # Main React component
-│   │   ├── App.css           # Styling for the app
-├── README.md                 # Documentation
-└── LICENSE                   # Project license
-```
-
----
-
 ## **🌍 Deployment**
 - **Frontend**: Hosted on [Vercel](https://vercel.com/).
 - **Backend**: Hosted on [Render](https://render.com/).
@@ -102,7 +83,8 @@ MyDailyHadeeth/
 ---
 
 ## **🛠️ Future Enhancements**
-Check [Github Issues](https://github.com/AhmedAlRawi0/MyDailyHadith/issues)
+- Stay tuned for **MyDailyVerse**! 🌟 
+- Also, Check our [Github Issues](https://github.com/AhmedAlRawi0/MyDailyHadith/issues)
 
 ---
 
