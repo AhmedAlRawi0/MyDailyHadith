@@ -51,20 +51,22 @@ def get_current_state():
         initial_state = {
             "current_index": 0,
             "last_updated": "1970-01-01",
-            "last_hadeeth": None
+            "last_hadeeth": None,
+            "last_hadeeth_fr": None
         }
         persistence_collection.insert_one(initial_state)
-        return initial_state["current_index"], initial_state["last_updated"], initial_state["last_hadeeth"]
-    return doc.get("current_index", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_hadeeth", None)
+        return initial_state["current_index"], initial_state["last_updated"], initial_state["last_hadeeth"], initial_state["last_hadeeth_fr"]
+    return doc.get("current_index", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_hadeeth", None), doc.get("last_hadeeth_fr", None)
 
 # Function to update the current state in MongoDB
-def update_current_state(index, hadeeth_data):
+def update_current_state(index, hadeeth_data, hadeeth_data_fr):
     persistence_collection.update_one(
         {},
         {"$set": {
             "current_index": index,
             "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-            "last_hadeeth": hadeeth_data
+            "last_hadeeth": hadeeth_data,
+            "last_hadeeth_fr": hadeeth_data_fr
         }},
         upsert=True  # Create the document if it doesn't exist
     )
@@ -72,9 +74,15 @@ def update_current_state(index, hadeeth_data):
 # Function to fetch hadeeth data from the API
 def fetch_hadeeth(hadeeth_id):
     url_en = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=en"
+    url_fr = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=fr" #! DO not orget to comapre datasets...
     response_en = requests.get(url_en)
-    if response_en.status_code == 200:
+    response_fr = requests.get(url_fr)
+    if response_en.status_code == 200 and response_fr.status_code == 200:
+        return response_en.json(), response_fr.json()
+    elif response_en.status_code == 200:
         return response_en.json()
+    elif response_fr.status_code == 200:
+        return response_fr.json()
     return None
 
 # Function to retrieve subscribers from MongoDB
@@ -258,13 +266,11 @@ def subscribe():
     return jsonify(response), 200 if "Successfully" in response["message"] else 400
 
 # Endpoint to unsubscribe from email notifications
-@app.route('/unsubscribe', methods=['POST', 'GET'])
+@app.route('/unsubscribe', methods=['POST'])
 def unsubscribe():
     if request.method == 'POST':
         data = request.get_json()
         email = data.get('email')
-    elif request.method == 'GET':
-        email = request.args.get('email')
 
     if not email:
         return jsonify({'message': 'Invalid email.'}), 400
@@ -280,26 +286,28 @@ def unsubscribe():
 # Endpoint to get the daily hadeeth
 @app.route('/daily-hadeeth', methods=['GET'])
 def daily_hadeeth():
-    current_index, last_updated, last_hadeeth = get_current_state()
+    current_index, last_updated, last_hadeeth, last_hadeeth_fr = get_current_state()
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    language = request.args.get('Language', 'English')
 
-    if today != last_updated:
+    if today != last_updated: # First API call of the day
         hadeeth_id = hadeeth_ids[current_index]
-        hadeeth_data = fetch_hadeeth(hadeeth_id)
-        if not hadeeth_data:
-            return jsonify({"error": "Failed to fetch hadeeth data."}), 500
+        hadeeth_data, hadeeth_data_fr = fetch_hadeeth(hadeeth_id) 
+        if not hadeeth_data and not hadeeth_data_fr:
+            return jsonify({"error": "Failed to fetch English & French hadeeth data."}), 500
+        elif not hadeeth_data_fr:
+            hadeeth_data_fr = hadeeth_data
 
         next_index = (current_index + 1) % len(hadeeth_ids)
-        update_current_state(next_index, hadeeth_data)
+        update_current_state(next_index, hadeeth_data, hadeeth_data_fr)
         send_daily_hadith()  # Send daily email
         response = make_response(jsonify(hadeeth_data))
-        response.headers['Cache-Control'] = 'no-store'
-        return response
     else:
-        response = make_response(jsonify(last_hadeeth))
-        response.headers['Cache-Control'] = 'no-store'
-        return response
+        response = make_response(jsonify(last_hadeeth_fr if language == 'French' else last_hadeeth))
+    
+    response.headers['Cache-Control'] = 'no-store'
+    return response
 
 if __name__ == '__main__':
-    send_daily_hadith()
+    # send_daily_hadith() #! Testing
     app.run(debug=True)

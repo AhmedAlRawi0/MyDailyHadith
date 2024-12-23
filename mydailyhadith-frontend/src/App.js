@@ -10,6 +10,7 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [subscriptionMessage, setSubscriptionMessage] = useState('');
   const [isScrolling, setIsScrolling] = useState(true);
+  const [language, setLanguage] = useState('English'); // Default language
 
   const today = new Date();
   const formattedDate = today.toLocaleDateString('en-US', {
@@ -22,8 +23,9 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get('https://mydailyhadith.onrender.com/daily-hadeeth');
-        //const response = await axios.get('http://127.0.0.1:5000/daily-hadeeth');
+        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
+
+        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -31,7 +33,11 @@ const App = () => {
     };
 
     fetchHadeeth();
-  }, []);
+  }, [language]); // Refetch when the language changes
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
 
   useEffect(() => {
     let scrollDirection = 1; // 1 for down, -1 for up
@@ -53,25 +59,20 @@ const App = () => {
     return () => clearInterval(scrollInterval); // Cleanup on component unmount
   }, [isScrolling]);
 
-  const handleMouseClick = () => {
-    setIsScrolling(false); // Stop scrolling on mouse click
+  const handleToggleScrolling = () => {
+    setIsScrolling(!isScrolling);
   };
-
-  useEffect(() => {
-    window.addEventListener('click', handleMouseClick);
-    return () => window.removeEventListener('click', handleMouseClick);
-  }, []);
 
   const handleSubscription = async () => {
     try {
       // Validate email using a regular expression
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+
       if (!emailRegex.test(email)) {
         setSubscriptionMessage('⚠️ Please enter a valid email address.');
         return;
       }
-  
+
       // Make the API call
       const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
       //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
@@ -95,11 +96,29 @@ const App = () => {
   return (
     <div className="container">
       <header>
-        <h1>Hadith of the Day</h1>
+        <h1>
+          {language === 'English' ? 'Hadith of the Day' : 'Hadith du Jour'}
+        </h1>
         <h2>{formattedDate}</h2>
-        <p className="scroll-note">Click anywhere to stop the scrolling.</p>
       </header>
       <main>
+        <div className="controls">
+          <button
+            className={`toggle-button ${isScrolling ? 'enabled' : 'disabled'}`}
+            onClick={handleToggleScrolling}
+          >
+            {isScrolling ? 'Disable Scrolling' : 'Enable Scrolling'}
+          </button>
+          <select
+            id="language"
+            value={language}
+            onChange={handleLanguageChange}
+            className="language-dropdown"
+          >
+            <option value="English">English</option>
+            <option value="French">French</option>
+          </select>
+        </div>
         <div className="hadeeth grid grid-cols-2 gap-4">
           <section className="arabic bg-gray-50 p-4 rounded shadow-md">
             <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
@@ -124,22 +143,42 @@ const App = () => {
           </section>
 
           <section className="english bg-gray-50 p-4 rounded shadow-md">
-            <h2 className="text-blue-700 text-xl font-semibold mb-4">The Hadith</h2>
-            <p className="text-gray-800 text-sm leading-relaxed mb-4">{hadeeth.hadeeth}</p>
+            <h2 className="text-blue-700 text-xl font-semibold mb-4">
+              {language === 'English' ? 'The Hadith' : 'Le Hadith'}
+            </h2>
+            <p className="text-gray-800 text-sm leading-relaxed mb-4">
+              {hadeeth.hadeeth}
+            </p>
 
             <div className="metadata">
-              <p className="text-gray-600 text-sm"><strong>Attribution:</strong> {hadeeth.attribution}</p>
-              <p className="text-gray-600 text-sm"><strong>Grade:</strong> {hadeeth.grade}</p>
+              <p className="text-gray-600 text-sm">
+                <strong>
+                  {language === 'English' ? 'Attribution' : 'Attribution'}:
+                </strong>{' '}
+                {hadeeth.attribution}
+              </p>
+              <p className="text-gray-600 text-sm">
+                <strong>
+                  {language === 'English' ? 'Grade' : 'Classement'}:
+                </strong>{' '}
+                {hadeeth.grade}
+              </p>
             </div>
 
             <section className="explanation mt-4">
-              <h3 className="text-lg font-medium text-blue-600">Explanation:</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">{hadeeth.explanation}</p>
+              <h3 className="text-lg font-medium text-blue-600">
+                {language === 'English' ? 'Explanation' : 'Explication'}:
+              </h3>
+              <p className="text-gray-700 text-sm leading-relaxed">
+                {hadeeth.explanation}
+              </p>
             </section>
 
             {hadeeth.hints && hadeeth.hints.length > 0 && (
               <section className="hints mt-4">
-                <h3 className="text-lg font-medium text-blue-600">Benefits:</h3>
+                <h3 className="text-lg font-medium text-blue-600">
+                  {language === 'English' ? 'Benefits' : 'Avantages'}:
+                </h3>
                 <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
                   {hadeeth.hints.map((hint, index) => (
                     <li key={index}>{hint}</li>
@@ -147,23 +186,39 @@ const App = () => {
                 </ul>
               </section>
             )}
+
           </section>
         </div>
 
         <section className="subscription">
-          Subscribe to Receive Daily Hadith via Email <i>(Check Junk)</i>
+          {language === 'English' ? (
+            <>
+              Subscribe to Receive Daily Hadith via Email <i>(Check Spam)</i>
+            </>
+          ) : (
+            <>
+              Abonnez-vous pour recevoir le hadith quotidien par e-mail <i>(Vérifiez les spams)</i>
+            </>
+          )}
           <div>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder={
+                language === 'English' ? 'Enter your email' : 'Entrez votre e-mail'
+              }
               className="email-input"
             />
-            <button onClick={handleSubscription} className="subscribe-button">Subscribe</button>
+            <button onClick={handleSubscription} className="subscribe-button">
+              {language === 'English' ? 'Subscribe' : 'S\'abonner'}
+            </button>
           </div>
-          {subscriptionMessage && <p className="subscription-message">{subscriptionMessage}</p>}
+          {subscriptionMessage && (
+            <p className="subscription-message">{subscriptionMessage}</p>
+          )}
         </section>
+
 
       </main>
       <footer className="text-center mt-8 text-gray-500 text-sm">
