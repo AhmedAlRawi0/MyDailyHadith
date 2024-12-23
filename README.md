@@ -18,8 +18,9 @@ This project aims to spread beneficial knowledge through the daily sharing of Ha
 ---
 
 ## **Features**
-- **Daily Hadeeth**: A new Hadeeth is served daily in both Arabic and English.
+- **Daily Hadeeth**: A new Hadeeth is served daily in Arabic, English and French.
 - **Metadata and Explanations**: Includes grade, attribution, and an explanation for better understanding.
+- **Email Subscription**: Users can subscribe to receive the daily Hadeeth via email.
 - **Frontend and Backend Integration**: Powered by a Flask backend and React frontend.
 - **Optimized API Usage**: Avoids unnecessary API calls by persisting daily Hadeeth data.
 
