@@ -6,7 +6,7 @@ This project embodies the noble Hadith:
 
 MyDailyHadith automates the sharing of a daily Hadeeth in Arabic and English. The app leverages Flask for the backend and React for the frontend, serving as a platform to disseminate authentic Islamic knowledge effectively. This project is powered by the [HadeethEnc API](https://hadeethenc.com/en/home) and utilizes the Hadeeth dataset provided by them. **Note**: We will be pulling the most recent dataset everynow and then.
 
-![MyDailyHadith](https://github.com/user-attachments/assets/9ae625bb-8c6b-40a7-b699-05efcd563d9b)
+![MyDailyHadith](./mydailyhadith-frontend/public/MDHdemo.gif)
 
 **Check it out at _(kindly wait a minute)_:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
 
