@@ -1,44 +1,65 @@
 .announcement-banner {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #d4af37; /* Gold color */
-    color: #fff;
-    padding: 5px 15px; /* Adjusted padding */
-    text-align: center;
-    font-size: 0.9rem; /* Smaller font size */
-    font-weight: bold;
-    z-index: 1000; /* Ensure it stays on top */
-    display: flex;
-    justify-content: center; /* Center the text */
-    align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #d4af37; /* Gold color */
+  color: #fff;
+  padding: 5px 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+  z-index: 1000; /* Ensure it stays on top */
+  display: flex;
+  justify-content: space-between; /* Space between text and button */
+  align-items: center;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.announcement-banner span {
+  flex-grow: 1; /* Ensure the text takes available space */
+  text-align: center; /* Center the text within its area */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Prevent text from overflowing */
+  text-overflow: ellipsis; /* Add ellipsis if the text overflows */
+}
+
+.announcement-banner a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.announcement-banner a:hover {
+  text-decoration: none;
+}
+
+.announcement-banner .close-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-right: 10px; /* Add space between button and text */
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.announcement-banner .close-button:hover {
+  color: #ccc;
+}
+
+/* Add responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .announcement-banner {
+      flex-direction: column; /* Stack text and button vertically */
+      text-align: center;
+      padding: 15px; /* Add padding for better spacing */
   }
-  
+
   .announcement-banner span {
-    flex-grow: 1; /* Ensure the text takes available space */
-    text-align: center; /* Center the text within its area */
+      white-space: normal; /* Allow text wrapping */
+      margin-bottom: 10px; /* Add space between text and button */
   }
-  
-  .announcement-banner a {
-    color: #fff;
-    text-decoration: underline;
-  }
-  
-  .announcement-banner a:hover {
-    text-decoration: none;
-  }
-  
+
   .announcement-banner .close-button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    margin-left: auto; /* Push the button to the left edge */
-    margin-right: 10px; /* Add space between button and screen edge */
-    cursor: pointer;
-    font-weight: bold;
+      margin-right: 0; /* Center the close button */
   }
-  
-  .announcement-banner .close-button:hover {
-    color: #ccc;
-  }
+}

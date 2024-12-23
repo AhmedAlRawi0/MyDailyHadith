@@ -60,6 +60,22 @@ const App = () => {
     setLanguage(event.target.value);
   };
 
+ useEffect(() => {
+  const handleMouseClick = (event) => {
+    // Ignore clicks on the button
+    if (event.target.id === 'toggle-scrolling-button') return;
+
+    setIsScrolling(false); // Stop scrolling on other clicks
+  };
+
+  window.addEventListener('click', handleMouseClick);
+
+  return () => {
+    window.removeEventListener('click', handleMouseClick);
+  };
+}, []);
+
+  
   useEffect(() => {
     let scrollDirection = 1; // 1 for down, -1 for up
     let scrollInterval;
@@ -127,6 +143,7 @@ const App = () => {
         <main>
           <div className="controls">
             <button
+              id="toggle-scrolling-button" // Add an id to identify the button
               className={`toggle-button ${isScrolling ? 'enabled' : 'disabled'}`}
               onClick={handleToggleScrolling}
             >
