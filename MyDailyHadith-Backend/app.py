@@ -324,7 +324,6 @@ def daily_hadeeth():
 
         next_index = (current_index + 1) % len(hadeeth_ids)
         update_current_state(next_index, hadeeth_data, hadeeth_data_fr)
-        send_daily_hadith()  # Send daily email
 
         # Since we are preserving data in the localStorage in the frontend, we need to send the same data from the previous session based on the language selected.
         response = make_response(jsonify(hadeeth_data_fr if language == 'French' else hadeeth_data)) 

@@ -89,6 +89,25 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Auto-refresh at 12 AM Sydney time
+  useEffect(() => {
+    const timeZone = 'Australia/Sydney'; // Sydney timezone
+    const now = moment.tz(timeZone); // Get current time in EST
+
+    // Calculate milliseconds until the next 12 AM Sydney
+    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // End of today + 1 second
+    const timeToMidnight = nextMidnight.diff(now);
+
+    // Set a timeout to refresh the page at 12 AM Sydney
+    const timer = setTimeout(() => {
+      window.location.reload(); // Reload the page to refresh all state
+    }, timeToMidnight);
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
+
+
   useEffect(() => {
     const handleMouseClick = (event) => {
       // Ignore clicks on the button
