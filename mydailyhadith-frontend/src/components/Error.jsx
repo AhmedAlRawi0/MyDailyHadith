@@ -1,5 +1,5 @@
-import React from 'react';
-import '../styling/Error.css';
+import React from "react";
+import "../styling/Error.css";
 
 const Error = ({ message, email }) => {
   return (
@@ -8,7 +8,8 @@ const Error = ({ message, email }) => {
         <h2 className="error-title">An Error Occurred</h2>
         <p className="error-message">{message}</p>
         <p className="error-contact">
-          If the issue persists, please send an email to <strong>{email}</strong>.
+          If the issue persists, please send an email to{" "}
+          <strong>{email}</strong>.
         </p>
       </div>
     </div>

@@ -9,6 +9,7 @@ import 'moment-timezone';
 import Header from './components/Header';
 import Controls from './components/Controls';
 import SubscriptionForm from './components/SubscriptionForm';
+import Footer from './components/Footer';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -164,7 +165,7 @@ const App = () => {
         <Header language={language} />
         <main>
           <Controls language={language} setLanguage={handleLanguageChange} isScrolling={isScrolling} handleToggleScrolling={handleToggleScrolling} />
-          
+
           <div className="hadeeth grid grid-cols-2 gap-4">
             <section className="arabic bg-gray-50 p-4 rounded shadow-md">
               <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
@@ -246,48 +247,7 @@ const App = () => {
 
           <SubscriptionForm language={language} email={email} setEmail={setEmail} subscriptionMessage={subscriptionMessage} handleSubscription={handleSubscription} />
         </main>
-        <footer className="text-center mt-8 text-gray-500 text-sm">
-          <p>
-            &copy; {new Date().getFullYear()} MyDailyHadith | Powered by {' '}
-            <a
-              href="https://hadeethenc.com/en/home"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="HadeethEncLogo.png"
-                alt="HadeethEnc"
-                style={{ height: '20px', verticalAlign: 'middle' }}
-              />
-            </a>{' '}
-            | View on  {' '}
-            <a
-              href="https://github.com/AhmedAlRawi0/MyDailyHadith"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="GithubLogo.png"
-                alt="GitHub Repository"
-                style={{ height: '20px', verticalAlign: 'middle' }}
-              />
-            </a>{' '}
-            | <a
-              href="https://docs.google.com/document/d/1g4KOyCPDkplTyzxWCJ9GcllIjWUIBsXbHYzUQuxkqyc/edit?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              About & Terms
-            </a>{' '}
-            | <a
-              href="https://forms.gle/k2bmiDgvTahbkGb87"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Get In Touch
-            </a>
-          </p>
-        </footer>
+        <Footer />
       </div>
     </>
   );

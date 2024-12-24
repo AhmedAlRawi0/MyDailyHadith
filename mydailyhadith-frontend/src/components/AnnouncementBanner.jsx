@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../styling/AnnouncementBanner.css';
+import React, { useState } from "react";
+import "../styling/AnnouncementBanner.css";
 
 const AnnouncementBanner = ({ message, onClose }) => {
   const [showBanner, setShowBanner] = useState(true);
