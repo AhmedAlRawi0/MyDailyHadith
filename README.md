@@ -83,7 +83,7 @@ This project aims to spread beneficial knowledge through the daily sharing of Ha
 ---
 
 ## **🛠️ Future Enhancements**
-- Stay tuned for **MyDailyVerse**! 🌟 
+- Stay tuned for **MyDailyVerse** And the mobile application of **MyDailyHadith**! 🌟 
 - Also, Check our [Github Issues](https://github.com/AhmedAlRawi0/MyDailyHadith/issues)
 
 ---
