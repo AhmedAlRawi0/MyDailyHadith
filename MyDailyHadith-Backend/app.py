@@ -61,11 +61,12 @@ def get_current_state():
 
 # Function to update the current state in MongoDB
 def update_current_state(index, hadeeth_data, hadeeth_data_fr):
+    local_tz = pytz.timezone('US/Eastern')
     persistence_collection.update_one(
         {},
         {"$set": {
             "current_index": index,
-            "last_updated": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "last_updated": datetime.now(local_tz).strftime("%Y-%m-%d"),
             "last_hadeeth": hadeeth_data,
             "last_hadeeth_fr": hadeeth_data_fr
         }},
