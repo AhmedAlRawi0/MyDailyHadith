@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from hadith_ids import get_ids_list
 from pymongo.server_api import ServerApi
 from pymongo.errors import DuplicateKeyError
+import pytz
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -143,7 +144,8 @@ def send_daily_hadith():
     current_index, last_updated, hadeeth, hadeeth_fr = get_current_state()
 
     # Get today's date in a readable format
-    today_date = datetime.now().strftime("%A, %B %d, %Y")
+    local_tz = pytz.timezone('US/Eastern')
+    today_date = datetime.now(local_tz).strftime("%A, %B %d, %Y")
 
     # Email HTML content template
     for to_email in subscribers:
