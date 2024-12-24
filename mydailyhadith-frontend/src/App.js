@@ -26,7 +26,10 @@ const App = () => {
     localStorage.setItem('isScrolling', isScrolling);
   }, [language, isScrolling]);
 
-  const bannerMessage = language === 'English' ? '🚀 This website is still being improved. Stay tuned for MyDailyVerse! 🌟' : '🚀 Ce site est encore en cours d\'amélioration. Restez à l\'écoute pour MyDailyVerse! 🌟';
+  const bannerMessage = language === 'English'
+    ? '🚀 This website is still being improved. Stay tuned for MyDailyVerse and the upcoming MyDailyHadith mobile app! 🌟'
+    : '🚀 Ce site est encore en cours d\'amélioration. Restez à l\'écoute pour MyDailyVerse et la future application mobile MyDailyHadith! 🌟';
+
 
   const today = new Date();
   const formattedDate = today.toLocaleDateString(language === 'French' ? 'fr-FR' : 'en-US', {
