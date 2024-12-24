@@ -33,8 +33,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-        //const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
+        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
+        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
