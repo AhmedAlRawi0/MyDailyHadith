@@ -173,6 +173,18 @@ const App = () => {
                   <li key={index}>{hint}</li>
                 ))}
               </ul>
+              {hadeeth.words_meanings_ar && hadeeth.words_meanings_ar.length > 0 && (
+                <>
+                  <h3 className="text-lg font-medium text-green-600 mt-4">معاني الكلمات:</h3>
+                  <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+                    {hadeeth.words_meanings_ar.map((item, index) => (
+                      <li key={index}>
+                        <strong>{item.word}:</strong> {item.meaning}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </section>
 
             <section className="english bg-gray-50 p-4 rounded shadow-md">
