@@ -12,8 +12,18 @@ const App = () => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState('');
   const [subscriptionMessage, setSubscriptionMessage] = useState('');
-  const [isScrolling, setIsScrolling] = useState(true);
-  const [language, setLanguage] = useState('English'); // Default language
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('language') || 'English';
+  });
+  const [isScrolling, setIsScrolling] = useState(() => {
+    const savedScrolling = localStorage.getItem('isScrolling');
+    return savedScrolling ? savedScrolling === 'true' : true; // Default to true if nothing is saved
+  });
+
+  useEffect(() => { // Save the current preferences to localStorage whenever they change
+    localStorage.setItem('language', language);
+    localStorage.setItem('isScrolling', isScrolling);
+  }, [language, isScrolling]);
 
   const bannerMessage = language === 'English' ? '🚀 This website is still being improved. Stay tuned for MyDailyVerse! 🌟' : '🚀 Ce site est encore en cours d\'amélioration. Restez à l\'écoute pour MyDailyVerse! 🌟';
 
@@ -60,22 +70,22 @@ const App = () => {
     setLanguage(event.target.value);
   };
 
- useEffect(() => {
-  const handleMouseClick = (event) => {
-    // Ignore clicks on the button
-    if (event.target.id === 'toggle-scrolling-button') return;
+  useEffect(() => {
+    const handleMouseClick = (event) => {
+      // Ignore clicks on the button
+      if (event.target.id === 'toggle-scrolling-button') return;
 
-    setIsScrolling(false); // Stop scrolling on other clicks
-  };
+      setIsScrolling(false); // Stop scrolling on other clicks
+    };
 
-  window.addEventListener('click', handleMouseClick);
+    window.addEventListener('click', handleMouseClick);
 
-  return () => {
-    window.removeEventListener('click', handleMouseClick);
-  };
-}, []);
+    return () => {
+      window.removeEventListener('click', handleMouseClick);
+    };
+  }, []);
 
-  
+
   useEffect(() => {
     let scrollDirection = 1; // 1 for down, -1 for up
     let scrollInterval;
