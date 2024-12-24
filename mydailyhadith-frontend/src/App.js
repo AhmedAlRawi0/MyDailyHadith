@@ -8,6 +8,7 @@ import moment from 'moment';
 import 'moment-timezone';
 import Header from './components/Header';
 import Controls from './components/Controls';
+import SubscriptionForm from './components/SubscriptionForm';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -137,8 +138,8 @@ const App = () => {
       }
 
       // Make the API call
-      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      //const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
+      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
       setSubscriptionMessage(`✅ ${response.data.message}`);
       setEmail(''); // Clear the email input
     } catch (err) {
@@ -162,7 +163,8 @@ const App = () => {
       <div className="container">
         <Header language={language} />
         <main>
-         <Controls language={language} setLanguage={handleLanguageChange} isScrolling={isScrolling} handleToggleScrolling={handleToggleScrolling} />
+          <Controls language={language} setLanguage={handleLanguageChange} isScrolling={isScrolling} handleToggleScrolling={handleToggleScrolling} />
+          
           <div className="hadeeth grid grid-cols-2 gap-4">
             <section className="arabic bg-gray-50 p-4 rounded shadow-md">
               <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
@@ -242,34 +244,7 @@ const App = () => {
             </section>
           </div>
 
-          <section className="subscription">
-            {language === 'English' ? (
-              <>
-                Subscribe to Receive Daily Hadith via Email <i>(Check Spam)</i>
-              </>
-            ) : (
-              <>
-                Abonnez-vous pour recevoir le hadith quotidien par e-mail <i>(Vérifiez les spams)</i>
-              </>
-            )}
-            <div>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={
-                  language === 'English' ? 'Enter your email' : 'Entrez votre e-mail'
-                }
-                className="email-input"
-              />
-              <button onClick={handleSubscription} className="subscribe-button">
-                {language === 'English' ? 'Subscribe' : 'S\'abonner'}
-              </button>
-            </div>
-            {subscriptionMessage && (
-              <p className="subscription-message">{subscriptionMessage}</p>
-            )}
-          </section>
+          <SubscriptionForm language={language} email={email} setEmail={setEmail} subscriptionMessage={subscriptionMessage} handleSubscription={handleSubscription} />
         </main>
         <footer className="text-center mt-8 text-gray-500 text-sm">
           <p>
@@ -309,7 +284,7 @@ const App = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Reach Out
+              Get In Touch
             </a>
           </p>
         </footer>

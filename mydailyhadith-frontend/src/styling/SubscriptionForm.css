@@ -1,0 +1,63 @@
+.subscription {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.subscription h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subscription h3 small {
+  font-size: 0.8rem;
+  color: #555;
+  display: block;
+  margin-top: 5px;
+}
+
+.email-input {
+  width: 320px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-right: 10px;
+  margin-top: 7px;
+}
+
+.subscribe-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.subscribe-button:hover {
+  background-color: #45a049;
+}
+
+.subscription-message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #2b2b2b;
+}
+
+@media screen and (max-width: 768px) {
+  .subscription {
+    margin-top: 30px; /* Add more space for mobile view */
+  }
+
+  .email-input {
+    width: 100%; /* Make the input box take full width on mobile */
+    margin-bottom: 10px; /* Add spacing below the input */
+  }
+
+  .subscribe-button {
+    width: 100%; /* Make the button take full width on mobile */
+  }
+}
