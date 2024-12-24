@@ -7,6 +7,7 @@ import AnnouncementBanner from './components/AnnouncementBanner';
 import moment from 'moment';
 import 'moment-timezone';
 import Header from './components/Header';
+import Controls from './components/Controls';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -33,8 +34,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
+        const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
+        //const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -161,33 +162,7 @@ const App = () => {
       <div className="container">
         <Header language={language} />
         <main>
-          <div className="controls">
-            <button
-              id="toggle-scrolling-button" // Add an id to identify the button
-              className={`toggle-button ${isScrolling ? 'enabled' : 'disabled'}`}
-              onClick={handleToggleScrolling}
-            >
-              {language === 'English'
-                ? isScrolling
-                  ? 'Disable Scrolling'
-                  : 'Enable Scrolling'
-                : language === 'French'
-                  ? isScrolling
-                    ? 'Désactiver le défilement'
-                    : 'Activer le défilement'
-                  : ''}
-            </button>
-
-            <select
-              id="language"
-              value={language}
-              onChange={handleLanguageChange}
-              className="language-dropdown"
-            >
-              <option value="English">English</option>
-              <option value="French">French</option>
-            </select>
-          </div>
+         <Controls language={language} setLanguage={handleLanguageChange} isScrolling={isScrolling} handleToggleScrolling={handleToggleScrolling} />
           <div className="hadeeth grid grid-cols-2 gap-4">
             <section className="arabic bg-gray-50 p-4 rounded shadow-md">
               <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
