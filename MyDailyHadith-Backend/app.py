@@ -52,21 +52,24 @@ def get_current_state():
         initial_state = {
             "current_index": 0,
             "last_updated": "1970-01-01",
+            "last_updated_syd": "1970-01-01",
             "last_hadeeth": None,
             "last_hadeeth_fr": None
         }
         persistence_collection.insert_one(initial_state)
-        return initial_state["current_index"], initial_state["last_updated"], initial_state["last_hadeeth"], initial_state["last_hadeeth_fr"]
-    return doc.get("current_index", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_hadeeth", None), doc.get("last_hadeeth_fr", None)
+        return initial_state["current_index"], initial_state["last_updated"], initial_state["last_updated_syd"], initial_state["last_hadeeth"], initial_state["last_hadeeth_fr"]
+    return doc.get("current_index", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_updated_syd", "1970-01-01"), doc.get("last_hadeeth", None), doc.get("last_hadeeth_fr", None)
 
 # Function to update the current state in MongoDB
 def update_current_state(index, hadeeth_data, hadeeth_data_fr):
     local_tz = pytz.timezone('US/Eastern')
+    local_syd_tz = pytz.timezone('Australia/Sydney')
     persistence_collection.update_one(
         {},
         {"$set": {
             "current_index": index,
             "last_updated": datetime.now(local_tz).strftime("%Y-%m-%d"),
+            "last_updated_syd": datetime.now(local_syd_tz).strftime("%Y-%m-%d"),
             "last_hadeeth": hadeeth_data,
             "last_hadeeth_fr": hadeeth_data_fr
         }},
@@ -142,7 +145,7 @@ def send_daily_hadith():
         return
 
     # Get the current state
-    current_index, last_updated, hadeeth, hadeeth_fr = get_current_state()
+    current_index, last_updated, last_updated_syd, hadeeth, hadeeth_fr = get_current_state()
 
     # Get today's date in a readable format
     local_tz = pytz.timezone('US/Eastern')
@@ -300,11 +303,16 @@ def unsubscribe():
 # Endpoint to get the daily hadeeth
 @app.route('/daily-hadeeth', methods=['GET'])
 def daily_hadeeth():
-    current_index, last_updated, last_hadeeth, last_hadeeth_fr = get_current_state()
+    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_state()
+    local_syd_tz = pytz.timezone('Australia/Sydney')
+    today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
+    if today_syd != last_updated_syd:
+        send_daily_hadith()
+        update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
+
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
     language = request.args.get('Language', 'English')
-
     if today != last_updated: # First API call of the day
         hadeeth_id = hadeeth_ids[current_index]
         hadeeth_data, hadeeth_data_fr = fetch_hadeeth(hadeeth_id) 
@@ -320,6 +328,9 @@ def daily_hadeeth():
     else:
         response = make_response(jsonify(last_hadeeth_fr if language == 'French' else last_hadeeth))
     
+    
+    
+
     response.headers['Cache-Control'] = 'no-store'
     return response
 
