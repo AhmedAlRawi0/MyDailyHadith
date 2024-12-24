@@ -300,7 +300,8 @@ def unsubscribe():
 @app.route('/daily-hadeeth', methods=['GET'])
 def daily_hadeeth():
     current_index, last_updated, last_hadeeth, last_hadeeth_fr = get_current_state()
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    local_tz = pytz.timezone('US/Eastern')
+    today = datetime.now(local_tz).strftime("%Y-%m-%d")
     language = request.args.get('Language', 'English')
 
     if today != last_updated: # First API call of the day
