@@ -10,6 +10,8 @@ import Header from './components/Header';
 import Controls from './components/Controls';
 import SubscriptionForm from './components/SubscriptionForm';
 import Footer from './components/Footer';
+import ArabicHadeeth from './components/ArabicHadith';
+import NonArabicHadith from './components/NonArabicHadith';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -28,10 +30,6 @@ const App = () => {
     localStorage.setItem('language', language);
     localStorage.setItem('isScrolling', isScrolling);
   }, [language, isScrolling]);
-
-  const bannerMessage = language === 'English'
-    ? '🚀 This website is still being improved. Stay tuned for MyDailyVerse and the upcoming MyDailyHadith mobile app! 🌟'
-    : '🚀 Ce site est encore en cours d\'amélioration. Restez à l\'écoute pour MyDailyVerse et la future application mobile MyDailyHadith! 🌟';
 
   useEffect(() => {
     const fetchHadeeth = async () => {
@@ -160,91 +158,15 @@ const App = () => {
 
   return (
     <>
-      <AnnouncementBanner message={bannerMessage} />
+      <AnnouncementBanner language={language} />
       <div className="container">
         <Header language={language} />
         <main>
           <Controls language={language} setLanguage={handleLanguageChange} isScrolling={isScrolling} handleToggleScrolling={handleToggleScrolling} />
-
           <div className="hadeeth grid grid-cols-2 gap-4">
-            <section className="arabic bg-gray-50 p-4 rounded shadow-md">
-              <h2 className="text-green-700 text-xl font-semibold mb-4">الحديث</h2>
-              <p className="font-[Amiri] text-lg text-right leading-relaxed text-gray-800 mb-4">{hadeeth.hadeeth_ar}</p>
-
-              <div className="metadata-inline">
-                <p className="text-gray-600 text-sm" dir="rtl">
-                  <strong>التخريج:</strong> {hadeeth.attribution_ar}، <strong>الصحة:</strong> {hadeeth.grade_ar}
-                </p>
-              </div>
-
-              <section className="explanation mt-4">
-                <h3 className="text-lg font-medium text-blue-600">الشرح:</h3>
-                <p className="text-gray-700 text-sm leading-relaxed">{hadeeth.explanation_ar}</p>
-              </section>
-
-              <h3 className="text-lg font-medium text-green-600 mb-2">الفوائد:</h3>
-              <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                {hadeeth.hints_ar.map((hint, index) => (
-                  <li key={index}>{hint}</li>
-                ))}
-              </ul>
-              {hadeeth.words_meanings_ar && hadeeth.words_meanings_ar.length > 0 && (
-                <>
-                  <h3 className="text-lg font-medium text-green-600 mt-4">معاني الكلمات:</h3>
-                  <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                    {hadeeth.words_meanings_ar.map((item, index) => (
-                      <li key={index}>
-                        <strong>{item.word}:</strong> {item.meaning}
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </section>
-
-            <section className="english bg-gray-50 p-4 rounded shadow-md">
-              <h2 className="text-blue-700 text-xl font-semibold mb-4">
-                {language === 'English' ? 'The Hadith' : 'Le Hadith'}
-              </h2>
-              <p className="text-gray-800 text-sm leading-relaxed mb-4">
-                {hadeeth.hadeeth}
-              </p>
-
-              <div className="metadata-inline">
-                <p className="text-gray-600 text-sm">
-                  <strong>
-                    {language === 'English' ? 'Attribution:' : 'Attribution:'}
-                  </strong>{' '}
-                  {hadeeth.attribution}, <strong>{language === 'English' ? 'Grade:' : 'Classement:'}</strong>{' '}
-                  {hadeeth.grade}
-                </p>
-              </div>
-
-              <section className="explanation mt-4">
-                <h3 className="text-lg font-medium text-blue-600">
-                  {language === 'English' ? 'Explanation' : 'Explication'}:
-                </h3>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {hadeeth.explanation}
-                </p>
-              </section>
-
-              {hadeeth.hints && hadeeth.hints.length > 0 && (
-                <section className="hints mt-4">
-                  <h3 className="text-lg font-medium text-blue-600">
-                    {language === 'English' ? 'Benefits' : 'Avantages'}:
-                  </h3>
-                  <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
-                    {hadeeth.hints.map((hint, index) => (
-                      <li key={index}>{hint}</li>
-                    ))}
-                  </ul>
-                </section>
-              )}
-
-            </section>
+            <ArabicHadeeth hadeeth={hadeeth} />
+            <NonArabicHadith hadeeth={hadeeth} language={language} />
           </div>
-
           <SubscriptionForm language={language} email={email} setEmail={setEmail} subscriptionMessage={subscriptionMessage} handleSubscription={handleSubscription} />
         </main>
         <Footer />
