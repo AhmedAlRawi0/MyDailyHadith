@@ -313,6 +313,7 @@ def daily_hadeeth():
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
     language = request.args.get('Language', 'English')
+
     if today != last_updated: # First API call of the day
         hadeeth_id = hadeeth_ids[current_index]
         hadeeth_data, hadeeth_data_fr = fetch_hadeeth(hadeeth_id) 
@@ -324,16 +325,15 @@ def daily_hadeeth():
         next_index = (current_index + 1) % len(hadeeth_ids)
         update_current_state(next_index, hadeeth_data, hadeeth_data_fr)
         send_daily_hadith()  # Send daily email
-        response = make_response(jsonify(hadeeth_data))
+
+        # Since we are preserving data in the localStorage in the frontend, we need to send the same data from the previous session based on the language selected.
+        response = make_response(jsonify(hadeeth_data_fr if language == 'French' else hadeeth_data)) 
     else:
         response = make_response(jsonify(last_hadeeth_fr if language == 'French' else last_hadeeth))
     
-    
-    
-
     response.headers['Cache-Control'] = 'no-store'
     return response
 
 if __name__ == '__main__':
-    #send_daily_hadith() #! Testing
+    # send_daily_hadith() # ! Testing
     app.run(debug=True)
