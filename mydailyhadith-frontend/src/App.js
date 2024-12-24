@@ -34,8 +34,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-        //const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
+        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
+        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -137,8 +137,8 @@ const App = () => {
       }
 
       // Make the API call
-      //const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
+      //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
       setSubscriptionMessage(`✅ ${response.data.message}`);
       setEmail(''); // Clear the email input
     } catch (err) {
