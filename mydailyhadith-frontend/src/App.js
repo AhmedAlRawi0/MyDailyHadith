@@ -4,8 +4,9 @@ import './styling/App.css';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import AnnouncementBanner from './components/AnnouncementBanner';
-import moment from 'moment-hijri';
-
+import moment from 'moment';
+import 'moment-timezone';
+import momentHijri from 'moment-hijri'; // Import Hijri support
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -34,7 +35,7 @@ const App = () => {
     month: 'long',
     day: 'numeric',
   });
-  const hijriDate = moment().format('iYYYY/iMMMM/iD'); // Hijri date
+  const hijriDate = momentHijri().format('iYYYY/iMMMM/iD'); // Hijri date
 
   const capitalizeAndFormatFrenchDate = (str) => {
     if (language === 'French') {
@@ -69,6 +70,24 @@ const App = () => {
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
+
+  // Auto-refresh at 12 AM EST
+  useEffect(() => {
+    const timeZone = 'America/New_York'; // EST timezone
+    const now = moment.tz(timeZone); // Get current time in EST
+
+    // Calculate milliseconds until the next 12 AM EST
+    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // End of today + 1 second
+    const timeToMidnight = nextMidnight.diff(now);
+
+    // Set a timeout to refresh the page at 12 AM EST
+    const timer = setTimeout(() => {
+      window.location.reload(); // Reload the page to refresh all state
+    }, timeToMidnight);
+
+    // Cleanup the timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleMouseClick = (event) => {
