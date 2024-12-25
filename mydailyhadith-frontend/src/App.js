@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './styling/App.css';
-import Loading from './components/Loading';
-import Error from './components/Error';
-import AnnouncementBanner from './components/AnnouncementBanner';
-import moment from 'moment';
 import 'moment-timezone';
-import Header from './components/Header';
-import Controls from './components/Controls';
-import SubscriptionForm from './components/SubscriptionForm';
-import Footer from './components/Footer';
+import React, { useEffect, useState } from 'react';
+import AnnouncementBanner from './components/AnnouncementBanner';
 import ArabicHadeeth from './components/ArabicHadith';
+import Controls from './components/Controls';
+import Error from './components/Error';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Loading from './components/Loading';
 import NonArabicHadith from './components/NonArabicHadith';
+import SubscriptionForm from './components/SubscriptionForm';
+import useAutoRefresh from './hooks/useAutoRefresh';
+import './styling/App.css';
+import { fetchHadeeth, subscribeToEmails } from './utils/api';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -19,78 +19,37 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [subscriptionMessage, setSubscriptionMessage] = useState('');
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'English';
+    return localStorage.getItem('language') || 'English'; // Default to English if nothing is saved
   });
   const [isScrolling, setIsScrolling] = useState(() => {
     const savedScrolling = localStorage.getItem('isScrolling');
     return savedScrolling ? savedScrolling === 'true' : true; // Default to true if nothing is saved
   });
 
-  useEffect(() => { // Save the current preferences to localStorage whenever they change
+  useEffect(() => { // Save the current preferences to localStorage whenever they change (For static displays after refresh)
     localStorage.setItem('language', language);
     localStorage.setItem('isScrolling', isScrolling);
   }, [language, isScrolling]);
 
   useEffect(() => {
-    const fetchHadeeth = async () => {
+    const fetchData = async () => {
       try {
-        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
-        setHadeeth(response.data);
+        const data = await fetchHadeeth(language);
+        setHadeeth(data);
       } catch (err) {
-        setError('Failed to fetch the Hadeeth. Please try again later.');
+        setError(err.message);
       }
     };
 
-    fetchHadeeth();
-  }, [language]); // Refetch when the language changes
+    fetchData();
+  }, [language]);
 
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-  };
-
-  // Auto-refresh at 12 AM EST
-  useEffect(() => {
-    const timeZone = 'America/New_York'; // EST timezone
-    const now = moment.tz(timeZone); // Get current time in EST
-
-    // Calculate milliseconds until the next 12 AM EST
-    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // End of today + 1 second
-    const timeToMidnight = nextMidnight.diff(now);
-
-    // Set a timeout to refresh the page at 12 AM EST
-    const timer = setTimeout(() => {
-      window.location.reload(); // Reload the page to refresh all state
-    }, timeToMidnight);
-
-    // Cleanup the timer on component unmount
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Auto-refresh at 12 AM Sydney time
-  useEffect(() => {
-    const timeZone = 'Australia/Sydney'; // Sydney timezone
-    const now = moment.tz(timeZone); // Get current time in EST
-
-    // Calculate milliseconds until the next 12 AM Sydney
-    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // End of today + 1 second
-    const timeToMidnight = nextMidnight.diff(now);
-
-    // Set a timeout to refresh the page at 12 AM Sydney
-    const timer = setTimeout(() => {
-      window.location.reload(); // Reload the page to refresh all state
-    }, timeToMidnight);
-
-    // Cleanup the timer on component unmount
-    return () => clearTimeout(timer);
-  }, []);
-
+  useAutoRefresh('America/New_York'); // Auto-refresh at 12 AM EST to refresh the Hadeeth
+  useAutoRefresh('Australia/Sydney'); // Auto-refresh at 12 AM Sydney/8 AM EST to send the email
 
   useEffect(() => {
     const handleMouseClick = (event) => {
-      // Ignore clicks on the button
-      if (event.target.id === 'toggle-scrolling-button') return;
-
+      if (event.target.id === 'toggle-scrolling-button') return; // Ignore clicks on the button
       setIsScrolling(false); // Stop scrolling on other clicks
     };
 
@@ -126,25 +85,24 @@ const App = () => {
     setIsScrolling(!isScrolling);
   };
 
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
   const handleSubscription = async () => {
     try {
-      // Validate email using a regular expression
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validate email syntax using a regular expression
 
       if (!emailRegex.test(email)) {
         setSubscriptionMessage('⚠️ Please enter a valid email address.');
         return;
       }
 
-      // Make the API call
-      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
-      setSubscriptionMessage(`✅ ${response.data.message}`);
-      setEmail(''); // Clear the email input
+      const message = await subscribeToEmails(email);
+      setSubscriptionMessage(`✅ ${message}`);
+      setEmail('');
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || 'An unexpected error occurred. Please try again.';
-      setSubscriptionMessage(`❌ Failed to subscribe: ${errorMessage}`);
+      setSubscriptionMessage(`❌ ${err.message}`);
     }
   };
 
