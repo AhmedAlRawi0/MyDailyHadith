@@ -1,4 +1,3 @@
-import moment from 'moment';
 import 'moment-timezone';
 import React, { useEffect, useState } from 'react';
 import AnnouncementBanner from './components/AnnouncementBanner';
@@ -10,6 +9,7 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 import NonArabicHadith from './components/NonArabicHadith';
 import SubscriptionForm from './components/SubscriptionForm';
+import useAutoRefresh from './hooks/useAutoRefresh';
 import './styling/App.css';
 import { fetchHadeeth, subscribeToEmails } from './utils/api';
 
@@ -44,36 +44,8 @@ const App = () => {
     fetchData();
   }, [language]);
 
-
-  useEffect(() => { // Auto-refresh at 12 AM EST
-    const timeZone = 'America/New_York'; // EST timezone
-    const now = moment.tz(timeZone); // Get current time in EST
-
-    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // Calculate milliseconds until the next 12 AM EST, End of today + 1 second
-    const timeToMidnight = nextMidnight.diff(now);
-
-    const timer = setTimeout(() => { // Set a timeout to refresh the page at 12 AM EST
-      window.location.reload(); // Reload the page to refresh all state
-    }, timeToMidnight);
-
-    return () => clearTimeout(timer);  // Cleanup the timer on component unmount
-  }, []);
-
-
-  useEffect(() => { // Auto-refresh at 12 AM Sydney time to send the email at 8 AM EST (12 AM Sydney = 8 AM EST)
-    const timeZone = 'Australia/Sydney'; // Sydney timezone
-    const now = moment.tz(timeZone); // Get current time in EST
-
-    const nextMidnight = moment.tz(timeZone).endOf('day').add(1, 'second'); // Calculate milliseconds until the next 12 AM Sydney, End of today + 1 second
-    const timeToMidnight = nextMidnight.diff(now);
-
-    const timer = setTimeout(() => { // Set a timeout to refresh the page at 12 AM Sydney
-      window.location.reload(); // Reload the page to refresh all state
-    }, timeToMidnight);
-
-    return () => clearTimeout(timer); // Cleanup the timer on component unmount
-  }, []);
-
+  useAutoRefresh('America/New_York'); // Auto-refresh at 12 AM EST to refresh the Hadeeth
+  useAutoRefresh('Australia/Sydney'); // Auto-refresh at 12 AM Sydney/8 AM EST to send the email
 
   useEffect(() => {
     const handleMouseClick = (event) => {
