@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './styling/App.css';
-import Loading from './components/Loading';
-import Error from './components/Error';
-import AnnouncementBanner from './components/AnnouncementBanner';
 import moment from 'moment';
 import 'moment-timezone';
-import Header from './components/Header';
-import Controls from './components/Controls';
-import SubscriptionForm from './components/SubscriptionForm';
-import Footer from './components/Footer';
+import React, { useEffect, useState } from 'react';
+import AnnouncementBanner from './components/AnnouncementBanner';
 import ArabicHadeeth from './components/ArabicHadith';
+import Controls from './components/Controls';
+import Error from './components/Error';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Loading from './components/Loading';
 import NonArabicHadith from './components/NonArabicHadith';
+import SubscriptionForm from './components/SubscriptionForm';
+import './styling/App.css';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -34,8 +34,8 @@ const App = () => {
   useEffect(() => {
     const fetchHadeeth = async () => {
       try {
-        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
-        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
+        const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`);
+        //const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`);
         setHadeeth(response.data);
       } catch (err) {
         setError('Failed to fetch the Hadeeth. Please try again later.');
@@ -137,8 +137,8 @@ const App = () => {
       }
 
       // Make the API call
-      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      //const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      //const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
+      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
       setSubscriptionMessage(`✅ ${response.data.message}`);
       setEmail(''); // Clear the email input
     } catch (err) {
