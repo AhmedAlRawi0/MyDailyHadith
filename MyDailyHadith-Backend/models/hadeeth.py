@@ -2,12 +2,12 @@ import requests
 from models.database import get_current_state, get_subscribers
 from models.email import send_email
 import pytz
-from datetime import datetime, timezone
+from datetime import datetime
 
 # Function to fetch hadeeth data from the API
 def fetch_hadeeth(hadeeth_id):
     url_en = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=en"
-    url_fr = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=fr" #! DO not orget to comapre datasets...
+    url_fr = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=fr"
     response_en = requests.get(url_en)
     response_fr = requests.get(url_fr)
     if response_en.status_code == 200 and response_fr.status_code == 200:
