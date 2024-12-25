@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 //const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_LOCAL;
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_PROD;
+//const API_BASE_URL = process.env.REACT_APP_API_BASE_URL_PROD;
+const API_BASE_URL = "https://mydailyhadith.onrender.com";
 
 /**
  * @param {*} language 
