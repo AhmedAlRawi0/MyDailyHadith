@@ -44,9 +44,9 @@ def daily_hadeeth():
     today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
 
     # ! Temporiraly commented out until @MohammedElsayed fixes it, please factor this out to another endpoint to avoid such issues.
-    #if today_syd != last_updated_syd: # API call at 8am EST to send daily hadith
-    #    send_daily_hadith()
-    #    update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
+    if today_syd != last_updated_syd: # API call at 8am EST to send daily hadith
+       send_daily_hadith()
+       update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
         
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
