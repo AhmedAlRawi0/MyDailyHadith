@@ -1,4 +1,3 @@
-import axios from 'axios';
 import moment from 'moment';
 import 'moment-timezone';
 import React, { useEffect, useState } from 'react';
@@ -12,6 +11,7 @@ import Loading from './components/Loading';
 import NonArabicHadith from './components/NonArabicHadith';
 import SubscriptionForm from './components/SubscriptionForm';
 import './styling/App.css';
+import { fetchHadeeth, subscribeToEmails } from './utils/api';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -32,19 +32,19 @@ const App = () => {
   }, [language, isScrolling]);
 
   useEffect(() => {
-    const fetchHadeeth = async () => {
+    const fetchData = async () => {
       try {
-        //const response = await axios.get(`http://127.0.0.1:5000/daily-hadeeth?Language=${language}`); // Development
-        const response = await axios.get(`https://mydailyhadith.onrender.com/daily-hadeeth?Language=${language}`); // Production
-        setHadeeth(response.data);
+        const data = await fetchHadeeth(language);
+        setHadeeth(data);
       } catch (err) {
-        setError('Failed to fetch the Hadeeth. Please try again later.');
+        setError(err.message);
       }
     };
-    fetchHadeeth();
-  }, [language]); // Refetch when the language changes
 
-  
+    fetchData();
+  }, [language]);
+
+
   useEffect(() => { // Auto-refresh at 12 AM EST
     const timeZone = 'America/New_York'; // EST timezone
     const now = moment.tz(timeZone); // Get current time in EST
@@ -126,14 +126,11 @@ const App = () => {
         return;
       }
 
-      //const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
-      setSubscriptionMessage(`✅ ${response.data.message}`);
-      setEmail(''); // Clear the email input
+      const message = await subscribeToEmails(email);
+      setSubscriptionMessage(`✅ ${message}`);
+      setEmail('');
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || 'An unexpected error occurred. Please try again.';
-      setSubscriptionMessage(`❌ Failed to subscribe: ${errorMessage}`);
+      setSubscriptionMessage(`❌ ${err.message}`);
     }
   };
 
