@@ -42,20 +42,24 @@ def daily_hadeeth():
 
     local_syd_tz = pytz.timezone('Australia/Sydney')
     today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
+
     if today_syd != last_updated_syd: # API call at 8am EST to send daily hadith
         send_daily_hadith()
         update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
-
+        
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
     language = request.args.get('Language', 'English')
+
     if today != last_updated: # First API call of the day
         hadeeth_id = hadeeth_ids[current_index]
         hadeeth_data, hadeeth_data_fr = fetch_hadeeth(hadeeth_id) 
+
         if not hadeeth_data and not hadeeth_data_fr:
             return jsonify({"error": "Failed to fetch English & French hadeeth data."}), 500
         elif not hadeeth_data_fr:
             hadeeth_data_fr = hadeeth_data
+
         next_index = (current_index + 1) % len(hadeeth_ids)
         update_current_state(next_index, hadeeth_data, hadeeth_data_fr)
 
