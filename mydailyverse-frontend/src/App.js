@@ -118,8 +118,11 @@ const App = () => {
         setSubscriptionMessage('⚠️ Please enter a valid email address.');
         return;
       }
-
-      const response = await axios.post('http://127.0.0.1:5000/subscribe', { email });
+      // TODO: to be replaced with the sunscribe endpoint form mydailyhadith-front/backend
+      //* no need to create another endpoint for this, rather use what's exising in mydailyhadith-front/backend
+      // const API_BASE_URL = "https://mydailyhadith.onrender.com"; (to be replaced with mydailyreminder.ca/daily-hadith/subscribe)
+      // const response = await axios.post(`${API_BASE_URL}/subscribe`, { email }); "it was local host"
+      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
       setSubscriptionMessage(`✅ ${response.data.message}`);
       setEmail('');
     } catch (err) {
