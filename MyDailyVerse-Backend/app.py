@@ -2,12 +2,12 @@ from flask import Flask, jsonify, request, make_response
 import os
 from flask_cors import CORS
 import requests
-from pymongo import MongoClient
-from pymongo.server_api import ServerApi
 from datetime import datetime
 import pytz
 import json
 from dotenv import load_dotenv
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -18,59 +18,90 @@ with open("quran.json", "r") as f:
 
 load_dotenv()
 
-# MongoDB configuration
-MONGO_URI = os.getenv("MONGO_URI")
-DB_NAME = os.getenv("MONGO_DB_NAME")
+# PostgreSQL configuration
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_PORT = os.getenv("DB_PORT")
 
-client = MongoClient(MONGO_URI, 
-                     tls=True,
-                     tlsAllowInvalidCertificates=True,
-                     server_api=ServerApi('1'))
+# Connect to PostgreSQL
 try:
-    client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
+    conn = psycopg2.connect(
+        host=DB_HOST,
+        database=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        port=DB_PORT,
+        cursor_factory=RealDictCursor # returning rows as dictionaries instead of tuples.
+    )
+    print("Connected to AWS RDS Alhamdulilah!")
 except Exception as e:
-    print(e)
+    print(f"Error connecting to PostgreSQL: {e}")
+    exit()
 
-db = client[DB_NAME]
-quran_persistence = db["quran-persistance"]
-
-# Helper functions
+###############* Helper functions *###############
 def get_current_state():
-    """Fetch the current state from MongoDB."""
-    doc = quran_persistence.find_one()
-    if not doc:
-        initial_state = {
-            "current_surah": 1,
-            "current_verse": 1,
-            "last_updated": "1970-01-01",
-            "last_updated_syd": "1970-01-01",
-            "last_verse": None,
-            "last_verse_fr": None,
-        }
-        quran_persistence.insert_one(initial_state)
-        return initial_state
-    return doc
+    with conn.cursor() as cursor:
+        cursor.execute("SELECT * FROM quraan LIMIT 1;") 
+        result = cursor.fetchone()
+        if not result:
+            initial_state = { # can be futher refactored...
+                "current_surah": 1,
+                "current_verse": 1,
+                "last_updated": "1970-01-01",
+                "last_updated_syd": "1970-01-01",
+                "last_verse": None,
+                "last_verse_fr": None,
+            }
+            cursor.execute(
+                """
+                INSERT INTO quraan (current_surah, current_verse, last_updated, last_updated_syd, last_verse, last_verse_fr)
+                VALUES (%s, %s, %s, %s, %s, %s);
+                """,
+                (
+                    initial_state["current_surah"],
+                    initial_state["current_verse"],
+                    initial_state["last_updated"],
+                    initial_state["last_updated_syd"],
+                    json.dumps(initial_state["last_verse"]),
+                    json.dumps(initial_state["last_verse_fr"]),
+                ),
+            )
+            conn.commit()
+            return initial_state
+        return result
+
 
 def update_current_state(surah, verse, verse_data, verse_data_fr):
-    """Update the current state in MongoDB."""
+    """Update the current state in PostgreSQL."""
     local_tz = pytz.timezone("US/Eastern")
     local_syd_tz = pytz.timezone("Australia/Sydney")
 
-    quran_persistence.update_one(
-        {},
-        {
-            "$set": {
-                "current_surah": surah,
-                "current_verse": verse,
-                "last_updated": datetime.now(local_tz).strftime("%Y-%m-%d"),
-                "last_updated_syd": datetime.now(local_syd_tz).strftime("%Y-%m-%d"),
-                "last_verse": verse_data,
-                "last_verse_fr": verse_data_fr,
-            }
-        },
-        upsert=True,
-    )
+    last_updated = datetime.now(local_tz).strftime("%Y-%m-%d")
+    last_updated_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
+
+    with conn.cursor() as cursor:
+        cursor.execute(
+            """
+            UPDATE quraan
+            SET current_surah = %s,
+                current_verse = %s,
+                last_updated = %s,
+                last_updated_syd = %s,
+                last_verse = %s,
+                last_verse_fr = %s;
+            """,
+            (
+                surah,
+                verse,
+                last_updated,
+                last_updated_syd,
+                json.dumps(verse_data),
+                json.dumps(verse_data_fr),
+            ),
+        )
+        conn.commit()
 
 def fetch_verse(surah, verse, translation_key):
     """Fetch verse data from the QuranEnc API."""
