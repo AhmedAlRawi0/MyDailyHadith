@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 .hadeeth {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two equal-width columns for desktop */

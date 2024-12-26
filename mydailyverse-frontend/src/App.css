@@ -1,38 +1,206 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('/public/Kaaba2.jpg') no-repeat center center fixed; /* New background image */
+  background-size: cover;
+  color: #333333; /* Neutral text color for better contrast */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.873); /* Semi-transparent white for readability */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.456);
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #44789f; /* Rose color to match the sky in the photo */
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Subtle shadow for better contrast */
+}
+
+header h2 {
+  font-size: 1.2rem;
+  color: #000000; /* Subtle pink tone matching the sky */
+}
+
+.arabic, .english, .french {
+  font-family: 'Amiri', serif; /* Arabic-style font for authenticity */
+  font-size: 1.2rem;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9); /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.arabic {
+  text-align: right;
+  direction: rtl;
+  color: #333333; /* Neutral color for Arabic text */
+  border-left: 5px solid #9b5e5e; /* Rose border for styling */
+  letter-spacing: normal;
+  line-height: 2;
+}
+
+.english, .french {
+  text-align: left;
+  direction: ltr;
+  font-size: 1.2rem;
+  color: #000000; /* Muted text color for translations */
+  border-left: 5px solid #9b5e5e; /* Rose border for styling */
+}
+
+/* Metadata and Explanation */
+.metadata, .explanation {
+  margin-top: 10px;
+}
+
+.metadata p, .explanation p {
+  color: #555555;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: 1.3rem;
+  color: #9b5e5e; /* Gold for headings */
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Subscription Section */
+.subscription {
+  margin-top: 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.subscription h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.email-input {
+  width: 300px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-right: 10px;
+  margin-top: 7px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.subscribe-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: #4caf50;
   color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.subscribe-button:hover {
+  background-color: #45a049;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.subscription-message {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #2b2b2b;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+/* Controls Section */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.toggle-button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button.disabled {
+  background-color: #9b5e5e; /* Rose when disabled */
+}
+
+.toggle-button:hover {
+  background-color: #45a049; /* Slightly darker green */
+}
+
+.language-dropdown {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .hadeeth {
+    flex-direction: column; /* Stack Arabic and English/French in single column for mobile */
+    gap: 10px;
+  }
+
+  .arabic, .english, .french {
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  header h2 {
+    font-size: 1rem;
+  }
+
+  .email-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 5px;
   }
 }

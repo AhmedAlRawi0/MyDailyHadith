@@ -6,8 +6,8 @@ const AnnouncementBanner = ({ language, onClose }) => {
 
   const bannerMessage =
     language === "English"
-      ? "🚀 This website is still being improved. Stay tuned for MyDailyVerse and MyDailyHadith mobile app! 🌟"
-      : "🚀 Ce site est encore en cours d'amélioration. Restez à l'écoute pour MyDailyVerse et l'application mobile MyDailyHadith! 🌟";
+      ? "🚀 This website is still being improved. Stay tuned for MyDailyReminder mobile app! 🌟"
+      : "🚀 Ce site est encore en cours d'amélioration. Restez à l'écoute pour l'application mobile MyDailyReminder! 🌟";
 
   const handleCloseBanner = () => {
     setShowBanner(false);
