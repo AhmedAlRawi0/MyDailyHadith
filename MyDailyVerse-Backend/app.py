@@ -127,8 +127,12 @@ def daily_verse():
         )
 
     response.headers["Cache-Control"] = "no-store"
+    '''
+    url = f"https://quranenc.com/api/v1/translation/aya/french_montada/2/282"
+    response = requests.get(url)
+    return response.json()
+    '''
     return response
-
 
 if __name__ == "__main__":
     app.run(debug=True)

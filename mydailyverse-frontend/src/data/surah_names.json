@@ -1,0 +1,458 @@
+{
+  "1": {
+    "english": "Al-Fatihah",
+    "arabic": "الفاتحة"
+  },
+  "2": {
+    "english": "Al-Baqarah",
+    "arabic": "البقرة"
+  },
+  "3": {
+    "english": "Aal-E-Imran",
+    "arabic": "آل عمران"
+  },
+  "4": {
+    "english": "An-Nisa",
+    "arabic": "النساء"
+  },
+  "5": {
+    "english": "Al-Maidah",
+    "arabic": "المائدة"
+  },
+  "6": {
+    "english": "Al-Anam",
+    "arabic": "الأنعام"
+  },
+  "7": {
+    "english": "Al-Araf",
+    "arabic": "الأعراف"
+  },
+  "8": {
+    "english": "Al-Anfal",
+    "arabic": "الأنفال"
+  },
+  "9": {
+    "english": "At-Tawbah",
+    "arabic": "التوبة"
+  },
+  "10": {
+    "english": "Yunus",
+    "arabic": "يونس"
+  },
+  "11": {
+    "english": "Hud",
+    "arabic": "هود"
+  },
+  "12": {
+    "english": "Yusuf",
+    "arabic": "يوسف"
+  },
+  "13": {
+    "english": "Ar-Rad",
+    "arabic": "الرعد"
+  },
+  "14": {
+    "english": "Ibrahim",
+    "arabic": "إبراهيم"
+  },
+  "15": {
+    "english": "Al-Hijr",
+    "arabic": "الحجر"
+  },
+  "16": {
+    "english": "An-Nahl",
+    "arabic": "النحل"
+  },
+  "17": {
+    "english": "Al-Isra",
+    "arabic": "الإسراء"
+  },
+  "18": {
+    "english": "Al-Kahf",
+    "arabic": "الكهف"
+  },
+  "19": {
+    "english": "Maryam",
+    "arabic": "مريم"
+  },
+  "20": {
+    "english": "Taha",
+    "arabic": "طه"
+  },
+  "21": {
+    "english": "Al-Anbiya",
+    "arabic": "الأنبياء"
+  },
+  "22": {
+    "english": "Al-Hajj",
+    "arabic": "الحج"
+  },
+  "23": {
+    "english": "Al-Muminun",
+    "arabic": "المؤمنون"
+  },
+  "24": {
+    "english": "An-Nur",
+    "arabic": "النور"
+  },
+  "25": {
+    "english": "Al-Furqan",
+    "arabic": "الفرقان"
+  },
+  "26": {
+    "english": "Ash-Shuara",
+    "arabic": "الشعراء"
+  },
+  "27": {
+    "english": "An-Naml",
+    "arabic": "النمل"
+  },
+  "28": {
+    "english": "Al-Qasas",
+    "arabic": "القصص"
+  },
+  "29": {
+    "english": "Al-Ankabut",
+    "arabic": "العنكبوت"
+  },
+  "30": {
+    "english": "Ar-Rum",
+    "arabic": "الروم"
+  },
+  "31": {
+    "english": "Luqman",
+    "arabic": "لقمان"
+  },
+  "32": {
+    "english": "As-Sajda",
+    "arabic": "السجدة"
+  },
+  "33": {
+    "english": "Al-Ahzab",
+    "arabic": "الأحزاب"
+  },
+  "34": {
+    "english": "Saba",
+    "arabic": "سبأ"
+  },
+  "35": {
+    "english": "Fatir",
+    "arabic": "فاطر"
+  },
+  "36": {
+    "english": "Ya-Sin",
+    "arabic": "يس"
+  },
+  "37": {
+    "english": "As-Saffat",
+    "arabic": "الصافات"
+  },
+  "38": {
+    "english": "Sad",
+    "arabic": "ص"
+  },
+  "39": {
+    "english": "Az-Zumar",
+    "arabic": "الزمر"
+  },
+  "40": {
+    "english": "Ghafir",
+    "arabic": "غافر"
+  },
+  "41": {
+    "english": "Fussilat",
+    "arabic": "فصلت"
+  },
+  "42": {
+    "english": "Ash-Shura",
+    "arabic": "الشورى"
+  },
+  "43": {
+    "english": "Az-Zukhruf",
+    "arabic": "الزخرف"
+  },
+  "44": {
+    "english": "Ad-Dukhan",
+    "arabic": "الدخان"
+  },
+  "45": {
+    "english": "Al-Jathiya",
+    "arabic": "الجاثية"
+  },
+  "46": {
+    "english": "Al-Ahqaf",
+    "arabic": "الأحقاف"
+  },
+  "47": {
+    "english": "Muhammad",
+    "arabic": "محمد"
+  },
+  "48": {
+    "english": "Al-Fath",
+    "arabic": "الفتح"
+  },
+  "49": {
+    "english": "Al-Hujurat",
+    "arabic": "الحجرات"
+  },
+  "50": {
+    "english": "Qaf",
+    "arabic": "ق"
+  },
+  "51": {
+    "english": "Adh-Dhariyat",
+    "arabic": "الذاريات"
+  },
+  "52": {
+    "english": "At-Tur",
+    "arabic": "الطور"
+  },
+  "53": {
+    "english": "An-Najm",
+    "arabic": "النجم"
+  },
+  "54": {
+    "english": "Al-Qamar",
+    "arabic": "القمر"
+  },
+  "55": {
+    "english": "Ar-Rahman",
+    "arabic": "الرحمن"
+  },
+  "56": {
+    "english": "Al-Waqia",
+    "arabic": "الواقعة"
+  },
+  "57": {
+    "english": "Al-Hadid",
+    "arabic": "الحديد"
+  },
+  "58": {
+    "english": "Al-Mujadila",
+    "arabic": "المجادلة"
+  },
+  "59": {
+    "english": "Al-Hashr",
+    "arabic": "الحشر"
+  },
+  "60": {
+    "english": "Al-Mumtahina",
+    "arabic": "الممتحنة"
+  },
+  "61": {
+    "english": "As-Saff",
+    "arabic": "الصف"
+  },
+  "62": {
+    "english": "Al-Jumua",
+    "arabic": "الجمعة"
+  },
+  "63": {
+    "english": "Al-Munafiqun",
+    "arabic": "المنافقون"
+  },
+  "64": {
+    "english": "At-Taghabun",
+    "arabic": "التغابن"
+  },
+  "65": {
+    "english": "At-Talaq",
+    "arabic": "الطلاق"
+  },
+  "66": {
+    "english": "At-Tahrim",
+    "arabic": "التحريم"
+  },
+  "67": {
+    "english": "Al-Mulk",
+    "arabic": "الملك"
+  },
+  "68": {
+    "english": "Al-Qalam",
+    "arabic": "القلم"
+  },
+  "69": {
+    "english": "Al-Haqqa",
+    "arabic": "الحاقة"
+  },
+  "70": {
+    "english": "Al-Maarij",
+    "arabic": "المعارج"
+  },
+  "71": {
+    "english": "Nuh",
+    "arabic": "نوح"
+  },
+  "72": {
+    "english": "Al-Jinn",
+    "arabic": "الجن"
+  },
+  "73": {
+    "english": "Al-Muzzammil",
+    "arabic": "المزمل"
+  },
+  "74": {
+    "english": "Al-Muddathir",
+    "arabic": "المدثر"
+  },
+  "75": {
+    "english": "Al-Qiyama",
+    "arabic": "القيامة"
+  },
+  "76": {
+    "english": "Al-Insan",
+    "arabic": "الإنسان"
+  },
+  "77": {
+    "english": "Al-Mursalat",
+    "arabic": "المرسلات"
+  },
+  "78": {
+    "english": "An-Naba",
+    "arabic": "النبأ"
+  },
+  "79": {
+    "english": "An-Naziat",
+    "arabic": "النازعات"
+  },
+  "80": {
+    "english": "Abasa",
+    "arabic": "عبس"
+  },
+  "81": {
+    "english": "At-Takwir",
+    "arabic": "التكوير"
+  },
+  "82": {
+    "english": "Al-Infitar",
+    "arabic": "الانفطار"
+  },
+  "83": {
+    "english": "Al-Mutaffifin",
+    "arabic": "المطففين"
+  },
+  "84": {
+    "english": "Al-Inshiqaq",
+    "arabic": "الانشقاق"
+  },
+  "85": {
+    "english": "Al-Buruj",
+    "arabic": "البروج"
+  },
+  "86": {
+    "english": "At-Tariq",
+    "arabic": "الطارق"
+  },
+  "87": {
+    "english": "Al-Ala",
+    "arabic": "الأعلى"
+  },
+  "88": {
+    "english": "Al-Ghashiya",
+    "arabic": "الغاشية"
+  },
+  "89": {
+    "english": "Al-Fajr",
+    "arabic": "الفجر"
+  },
+  "90": {
+    "english": "Al-Balad",
+    "arabic": "البلد"
+  },
+  "91": {
+    "english": "Ash-Shams",
+    "arabic": "الشمس"
+  },
+  "92": {
+    "english": "Al-Lail",
+    "arabic": "الليل"
+  },
+  "93": {
+    "english": "Ad-Duha",
+    "arabic": "الضحى"
+  },
+  "94": {
+    "english": "Ash-Sharh",
+    "arabic": "الشرح"
+  },
+  "95": {
+    "english": "At-Tin",
+    "arabic": "التين"
+  },
+  "96": {
+    "english": "Al-Alaq",
+    "arabic": "العلق"
+  },
+  "97": {
+    "english": "Al-Qadr",
+    "arabic": "القدر"
+  },
+  "98": {
+    "english": "Al-Bayyina",
+    "arabic": "البينة"
+  },
+  "99": {
+    "english": "Az-Zalzala",
+    "arabic": "الزلزلة"
+  },
+  "100": {
+    "english": "Al-Adiyat",
+    "arabic": "العاديات"
+  },
+  "101": {
+    "english": "Al-Qaria",
+    "arabic": "القارعة"
+  },
+  "102": {
+    "english": "At-Takathur",
+    "arabic": "التكاثر"
+  },
+  "103": {
+    "english": "Al-Asr",
+    "arabic": "العصر"
+  },
+  "104": {
+    "english": "Al-Humaza",
+    "arabic": "الهمزة"
+  },
+  "105": {
+    "english": "Al-Fil",
+    "arabic": "الفيل"
+  },
+  "106": {
+    "english": "Quraish",
+    "arabic": "قريش"
+  },
+  "107": {
+    "english": "Al-Maun",
+    "arabic": "الماعون"
+  },
+  "108": {
+    "english": "Al-Kawthar",
+    "arabic": "الكوثر"
+  },
+  "109": {
+    "english": "Al-Kafiroon",
+    "arabic": "الكافرون"
+  },
+  "110": {
+    "english": "An-Nasr",
+    "arabic": "النصر"
+  },
+  "111": {
+    "english": "Al-Masad",
+    "arabic": "المسد"
+  },
+  "112": {
+    "english": "Al-Ikhlas",
+    "arabic": "الإخلاص"
+  },
+  "113": {
+    "english": "Al-Falaq",
+    "arabic": "الفلق"
+  },
+  "114": {
+    "english": "An-Nas",
+    "arabic": "الناس"
+  }
+}
