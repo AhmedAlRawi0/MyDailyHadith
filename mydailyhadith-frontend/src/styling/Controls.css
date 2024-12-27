@@ -19,11 +19,11 @@
 }
 
 .toggle-button.disabled {
-  background-color: #f44336; /* Red when disabled */
+  background-color: #d4af37; /* Gold when disabled */
 }
 
 .toggle-button:hover {
-  background-color: #45a049; /* Slightly darker green */
+  background-color: #45a049;
 }
 
 .language-dropdown {
