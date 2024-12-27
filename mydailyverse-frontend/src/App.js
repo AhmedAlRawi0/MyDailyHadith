@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import './App.css';
 import Loading from './components/Loading';
 import Error from './components/Error';
@@ -9,6 +8,7 @@ import useAutoRefresh from './hooks/useAutoRefresh';
 import momentHijri from "moment-hijri";
 import 'moment-timezone';
 import surahNames from './data/surah_names.json'
+import { fetchVerse, subscribeToEmails } from './utils/api';
 
 const App = () => {
   const [verse, setVerse] = useState(null);
@@ -54,24 +54,23 @@ const App = () => {
   const hijriDate = momentHijri().format("iYYYY/iMMMM/iD"); // Hijri date
 
   useEffect(() => {
-    const fetchVerse = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/daily-verse?Language=${language}`);
-        setVerse(response);
+        const data = await fetchVerse(language);
+        setVerse(data);
       } catch (err) {
-        setError('Failed to fetch the verse. Please try again later.');
+        setError(err.message);
       }
     };
 
-    fetchVerse();
+    fetchData();
   }, [language]);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
 
-  useAutoRefresh('America/New_York'); // Auto-refresh at 12 AM EST to refresh the Hadeeth
-  useAutoRefresh('Australia/Sydney'); // Auto-refresh at 12 AM Sydney/8 AM EST to send the email
+  useAutoRefresh('America/New_York', fetchVerse, language); // Auto-refresh at 12 AM EST to refresh the Hadeeth
 
   useEffect(() => {
     const handleMouseClick = (event) => {
@@ -112,23 +111,18 @@ const App = () => {
 
   const handleSubscription = async () => {
     try {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validate email syntax using a regular expression
 
       if (!emailRegex.test(email)) {
         setSubscriptionMessage('⚠️ Please enter a valid email address.');
         return;
       }
-      // TODO: to be replaced with the sunscribe endpoint form mydailyhadith-front/backend
-      //* no need to create another endpoint for this, rather use what's exising in mydailyhadith-front/backend
-      // const API_BASE_URL = "https://mydailyhadith.onrender.com"; (to be replaced with mydailyreminder.ca/daily-hadith/subscribe)
-      // const response = await axios.post(`${API_BASE_URL}/subscribe`, { email }); "it was local host"
-      const response = await axios.post('https://mydailyhadith.onrender.com/subscribe', { email });
-      setSubscriptionMessage(`✅ ${response.data.message}`);
+
+      const message = await subscribeToEmails(email);
+      setSubscriptionMessage(`✅ ${message}`);
       setEmail('');
     } catch (err) {
-      const errorMessage =
-        err.response?.data?.message || 'An unexpected error occurred. Please try again.';
-      setSubscriptionMessage(`❌ Failed to subscribe: ${errorMessage}`);
+      setSubscriptionMessage(`❌ ${err.message}`);
     }
   };
 

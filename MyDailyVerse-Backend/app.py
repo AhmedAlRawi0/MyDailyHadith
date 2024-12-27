@@ -121,14 +121,6 @@ def daily_verse():
     last_verse = current_state["last_verse"]
     last_verse_fr = current_state["last_verse_fr"]
 
-    # Sydney timezone logic for sending daily reminders
-    local_syd_tz = pytz.timezone("Australia/Sydney")
-    today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
-    if today_syd != last_updated_syd:
-        # TODO - Placeholder for sending daily verse emails until we factor out shared modules.
-        # send_daily_verse()
-        update_current_state(current_surah, current_verse, last_verse, last_verse_fr)
-
     # US/Eastern timezone logic for daily verse API
     local_tz = pytz.timezone("US/Eastern")
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
