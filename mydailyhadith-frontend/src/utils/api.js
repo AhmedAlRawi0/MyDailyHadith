@@ -18,6 +18,19 @@ export const fetchHadeeth = async (language) => {
 };
 
 /**
+ * @param {*} language 
+ * @returns 
+ */
+export const sendEmail = async (language) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/send-email`);
+    return response.data;
+  } catch (err) {
+    throw new Error('Failed to send email. Please try again later.');
+  }
+};
+
+/**
  * 
  * @param {*} email 
  * @returns 

@@ -35,18 +35,25 @@ def unsubscribe():
     response = remove_subscriber(email)
     return jsonify(response), 200 if "Successfully" in response["message"] else 400
 
-# Endpoint to get the daily hadeeth
-@app.route('/daily-hadeeth', methods=['GET'])
-def daily_hadeeth():
+# Endpoint to send emails
+@app.route('/send-email', methods=['GET'])
+def sendEmail():
     current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_state()
 
     local_syd_tz = pytz.timezone('Australia/Sydney')
     today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
 
-    # ! Temporiraly commented out until @MohammedElsayed fixes it, please factor this out to another endpoint to avoid such issues.
     if today_syd != last_updated_syd: # API call at 8am EST to send daily hadith
        send_daily_hadith()
        update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
+       return jsonify({"message": "Email sent to subscribers"}), 200
+    else:
+        return jsonify({"message": "Email already sent today"}), 400
+
+# Endpoint to get the daily hadeeth
+@app.route('/daily-hadeeth', methods=['GET'])
+def daily_hadeeth():
+    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_state()
         
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")

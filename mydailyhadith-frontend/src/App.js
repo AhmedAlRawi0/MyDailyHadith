@@ -11,7 +11,7 @@ import NonArabicHadith from './components/NonArabicHadith';
 import SubscriptionForm from './components/SubscriptionForm';
 import useAutoRefresh from './hooks/useAutoRefresh';
 import './styling/App.css';
-import { fetchHadeeth, subscribeToEmails } from './utils/api';
+import { fetchHadeeth, sendEmail, subscribeToEmails } from './utils/api';
 
 const App = () => {
   const [hadeeth, setHadeeth] = useState(null);
@@ -44,8 +44,8 @@ const App = () => {
     fetchData();
   }, [language]);
 
-  useAutoRefresh('America/New_York'); // Auto-refresh at 12 AM EST to refresh the Hadeeth
-  useAutoRefresh('Australia/Sydney'); // Auto-refresh at 12 AM Sydney/8 AM EST to send the email
+  useAutoRefresh('America/New_York', fetchHadeeth, language); // Auto-refresh at 12 AM EST to refresh the Hadeeth
+  useAutoRefresh('Australia/Sydney', sendEmail, language); // Auto-refresh at 12 AM Sydney/8 AM EST to send the email
 
   useEffect(() => {
     const handleMouseClick = (event) => {
