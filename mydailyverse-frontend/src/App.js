@@ -70,7 +70,7 @@ const App = () => {
     setLanguage(event.target.value);
   };
 
-  useAutoRefresh('America/New_York', fetchVerse, language); // Auto-refresh at 12 AM EST to refresh the Hadeeth
+  useAutoRefresh('America/New_York', fetchVerse, language); // Auto-refresh at 12 AM EST to refresh the Verse
 
   useEffect(() => {
     const handleMouseClick = (event) => {
@@ -175,20 +175,20 @@ const App = () => {
           <div className="verse">
             <section className="arabic">
               <h2>الآية</h2>
-              <p>{verse.data.result.arabic_text}</p>
-              <strong>السورة:</strong> {surahNames[verse.data.result.sura].arabic}،{" "}
-              <strong>الآية:</strong> {verse.data.result.aya}
+              <p>{verse.result.arabic_text}</p>
+              <strong>السورة:</strong> {surahNames[verse.result.sura].arabic}،{" "}
+              <strong>الآية:</strong> {verse.result.aya}
             </section>
 
             <section className="english">
               <h2>{language === 'English' ? 'The Verse' : 'Le Verset'}</h2>
-              <p>{verse.data.result.translation}</p>
-              <strong>Sura:</strong> {surahNames[verse.data.result.sura].english},{" "}
-              <strong>Aya:</strong> {verse.data.result.aya}
-              {verse.data.result.footnotes && verse.data.result.footnotes.trim() !== '' && (
+              <p>{verse.result.translation}</p>
+              <strong>Sura:</strong> {surahNames[verse.result.sura].english},{" "}
+              <strong>Aya:</strong> {verse.result.aya}
+              {verse.result.footnotes && verse.result.footnotes.trim() !== '' && (
                 <div className="footnotes-section">
                   <h3>{language === 'English' ? 'Footnotes:' : 'Note de bas de page:'}</h3>
-                  <p>{verse.data.result.footnotes}</p>
+                  <p>{verse.result.footnotes}</p>
                   </div>
               )}
             </section>
