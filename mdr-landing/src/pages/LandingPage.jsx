@@ -1,8 +1,6 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import React, { useEffect } from "react";
-import Footer from "../components/layout/Footer";
-import Navbar from "../components/layout/Navbar";
 import About from "../components/sections/About";
 import Contact from "../components/sections/Contact";
 import Features from "../components/sections/Features";
@@ -29,8 +27,6 @@ const LandingPage = () => {
       <UseCases />
       <Partners />
       <Contact />
-      <Footer />
-      <Navbar />
       <WorkInProgressHint />
     </div>
   );

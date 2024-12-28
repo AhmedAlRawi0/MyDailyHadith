@@ -1,11 +1,11 @@
 import React from "react";
 import {
-    AuthenticIcon,
-    FreeIcon,
-    MultilingualIcon,
-    PersonalGrowthIcon,
-    RegularUpdatesIcon,
-    UserFriendlyIcon,
+  AuthenticIcon,
+  FreeIcon,
+  MultilingualIcon,
+  PersonalGrowthIcon,
+  RegularUpdatesIcon,
+  UserFriendlyIcon,
 } from "../Icons";
 import FeatureCard from "../ui/FeatureCard";
 
@@ -17,34 +17,52 @@ const Features = () => (
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <FeatureCard
-          icon={<FreeIcon />}
-          title="100% Free"
-          description="Access all resources completely free of charge, making Islamic knowledge accessible to everyone"
+          feature={{
+            icon: <FreeIcon />,
+            title: "100% Free",
+            description:
+              "Access all resources completely free of charge, making Islamic knowledge accessible to everyone",
+          }}
         />
         <FeatureCard
-          icon={<AuthenticIcon />}
-          title="Authentic Sources"
-          description="All content is verified from authentic Islamic sources and scholarly interpretations"
+          feature={{
+            icon: <AuthenticIcon />,
+            title: "Authentic Sources",
+            description:
+              "All content is verified from authentic Islamic sources and scholarly interpretations",
+          }}
         />
         <FeatureCard
-          icon={<PersonalGrowthIcon />}
-          title="Personal Growth"
-          description="Enhance your Islamic knowledge at your own pace for personal development and spiritual growth"
+          feature={{
+            icon: <PersonalGrowthIcon />,
+            title: "Personal Growth",
+            description:
+              "Enhance your Islamic knowledge at your own pace for personal development and spiritual growth",
+          }}
         />
         <FeatureCard
-          icon={<MultilingualIcon />}
-          title="Multilingual Support"
-          description="Access content in multiple languages to better understand Islamic teachings"
+          feature={{
+            icon: <MultilingualIcon />,
+            title: "Multilingual Support",
+            description:
+              "Access content in multiple languages to better understand Islamic teachings",
+          }}
         />
         <FeatureCard
-          icon={<UserFriendlyIcon />}
-          title="User-Friendly Interface"
-          description="Easy-to-navigate platform designed for seamless learning experience"
+          feature={{
+            icon: <UserFriendlyIcon />,
+            title: "User-Friendly Interface",
+            description:
+              "Easy-to-navigate platform designed for seamless learning experience",
+          }}
         />
         <FeatureCard
-          icon={<RegularUpdatesIcon />}
-          title="Regular Updates"
-          description="Continuously updated content to provide comprehensive Islamic knowledge"
+          feature={{
+            icon: <RegularUpdatesIcon />,
+            title: "Regular Updates",
+            description:
+              "Continuously updated content to provide comprehensive Islamic knowledge",
+          }}
         />
       </div>
     </div>
