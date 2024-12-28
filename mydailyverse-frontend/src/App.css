@@ -51,7 +51,7 @@ header h2 {
   text-align: right;
   direction: rtl;
   color: #333333; /* Neutral color for Arabic text */
-  border-left: 5px solid #9b5e5e; /* Rose border for styling */
+  border-right: 5px solid #9b5e5e; /* Rose border for styling */
   letter-spacing: normal;
   line-height: 2;
   font-size: 1.89rem;
