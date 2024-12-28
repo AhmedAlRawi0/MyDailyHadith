@@ -7,10 +7,12 @@
 
 .arabic {
   order: 2; /* Arabic in the right column on desktop */
+  border-right: 5px solid #d4af37; /* Gold border for styling */
 }
 
 .english {
   order: 1; /* English in the left column on desktop */
+  border-left: 5px solid #d4af37; /* Gold border for styling */
 }
 
 /* Mobile view: stack the columns */
