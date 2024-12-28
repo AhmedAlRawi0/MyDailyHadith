@@ -1,14 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
+import React, { Suspense } from 'react';
+import './App.css';
+import Footer from './components/layout/Footer';
+import Navbar from './components/layout/Navbar';
+import LoadingSpinner from './components/ui/LoadingSpinner';
+import { AppProvider } from './context/AppContext';
+
+const LandingPage = React.lazy(() => import('./pages/LandingPage'));
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-      </Routes>
-    </Router>
+    <AppProvider>
+      <div className="App">
+        <Navbar />
+        <Suspense fallback={<LoadingSpinner />}>
+          <LandingPage />
+        </Suspense>
+        <Footer />
+      </div>
+    </AppProvider>
   );
 }
 
