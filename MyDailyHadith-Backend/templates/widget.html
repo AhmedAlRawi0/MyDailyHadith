@@ -1,0 +1,15 @@
+<div class="hadith-widget hadith-widget-{{ theme }}">
+  {% if language in ['both', 'arabic'] %}
+  <div class="hadith-arabic">{{ hadith.arabic_text }}</div>
+  {% endif %}
+  
+  {% if language in ['both', 'english'] %}
+  <div class="hadith-english">{{ hadith.english_text }}</div>
+  {% endif %}
+  
+  <div class="hadith-metadata">
+    <span class="hadith-narrator">{{ hadith.narrator }}</span>
+    <span class="hadith-source">{{ hadith.source }}</span>
+    <span class="hadith-number">#{{ hadith.number }}</span>
+  </div>
+</div> 
