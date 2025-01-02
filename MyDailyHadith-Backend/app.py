@@ -1,13 +1,19 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, render_template
 from flask_cors import CORS
 from datetime import datetime
 from hadith_ids import get_ids_list
 import pytz
 from models.database import add_subscriber, remove_subscriber, get_current_state, update_current_state
-from models.hadeeth import fetch_hadeeth, send_daily_hadith
+from models.hadeeth import fetch_hadeeth, send_daily_hadith, get_random_hadith
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",
+        "methods": ["GET"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Hadeeth IDs list
 hadeeth_ids = get_ids_list()
@@ -78,6 +84,21 @@ def daily_hadeeth():
     
     response.headers['Cache-Control'] = 'no-store'
     return response
+
+# Endpoint to serve the widget
+@app.route('/api/widget/hadith')
+def hadith_widget():
+    theme = request.args.get('theme', 'light')
+    language = request.args.get('language', 'both')
+    
+    try:
+        hadith = get_random_hadith()
+        return render_template('widget.html',
+                             hadith=hadith,
+                             theme=theme,
+                             language=language)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     # send_daily_hadith() # ! Testing
