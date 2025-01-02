@@ -34,7 +34,7 @@ const Services = () => (
             </p>
             <button
               onClick={() =>
-                handleNavigate("https://my-daily-verse.vercel.app/")
+                handleNavigate("https://verse.mydailyreminder.ca")
               }
               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
             >
@@ -64,7 +64,7 @@ const Services = () => (
             </p>
             <button
               onClick={() =>
-                handleNavigate("https://my-daily-hadith.vercel.app/")
+                handleNavigate("https://hadith.mydailyreminder.ca")
               }
               className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition"
             >

@@ -1,0 +1,14 @@
+{
+    "redirects": [
+        {
+            "source": "/hadith",
+            "destination": "https://hadith.mydailyreminder.ca",
+            "permanent": true
+        },
+        {
+            "source": "/verse",
+            "destination": "https://verse.mydailyreminder.ca",
+            "permanent": true
+        }
+    ]
+}
