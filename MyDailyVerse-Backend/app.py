@@ -6,8 +6,8 @@ from datetime import datetime
 import pytz
 import json
 from dotenv import load_dotenv
-import psycopg2
-from psycopg2.extras import RealDictCursor
+from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -18,90 +18,58 @@ with open("quran.json", "r") as f:
 
 load_dotenv()
 
-# PostgreSQL configuration
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_PORT = os.getenv("DB_PORT")
+# MongoDB configuration
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = os.getenv("MONGO_DB_NAME")
+COLLECTION_NAME = "quraan-persistence"
 
-# Connect to PostgreSQL
+# Connect to MongoDB
 try:
-    conn = psycopg2.connect(
-        host=DB_HOST,
-        database=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        port=DB_PORT,
-        cursor_factory=RealDictCursor # returning rows as dictionaries instead of tuples.
-    )
-    print("Connected to AWS RDS Alhamdulilah!")
+    client = MongoClient(MONGO_URI,
+                        tls=True,
+                        tlsAllowInvalidCertificates=True,
+                        server_api=ServerApi('1'))
+    client.admin.command('ping')
+    print("Connected to MongoDB Alhamdulilah!")
+    db = client[DB_NAME]
+    persistence_collection = db[COLLECTION_NAME]
 except Exception as e:
-    print(f"Error connecting to PostgreSQL: {e}")
+    print(f"Error connecting to MongoDB: {e}")
     exit()
 
 ###############* Helper functions *###############
 def get_current_state():
-    with conn.cursor() as cursor:
-        cursor.execute("SELECT * FROM quraan LIMIT 1;") 
-        result = cursor.fetchone()
-        if not result:
-            initial_state = { # can be futher refactored...
-                "current_surah": 1,
-                "current_verse": 1,
-                "last_updated": "1970-01-01",
-                "last_updated_syd": "1970-01-01",
-                "last_verse": None,
-                "last_verse_fr": None,
-            }
-            cursor.execute(
-                """
-                INSERT INTO quraan (current_surah, current_verse, last_updated, last_updated_syd, last_verse, last_verse_fr)
-                VALUES (%s, %s, %s, %s, %s, %s);
-                """,
-                (
-                    initial_state["current_surah"],
-                    initial_state["current_verse"],
-                    initial_state["last_updated"],
-                    initial_state["last_updated_syd"],
-                    json.dumps(initial_state["last_verse"]),
-                    json.dumps(initial_state["last_verse_fr"]),
-                ),
-            )
-            conn.commit()
-            return initial_state
-        return result
-
+    doc = persistence_collection.find_one()
+    if not doc:
+        initial_state = {
+            "current_surah": 1,
+            "current_verse": 1,
+            "last_updated": "1970-01-01",
+            "last_verse": None,
+            "last_verse_fr": None,
+        }
+        persistence_collection.insert_one(initial_state)
+        return initial_state["current_surah"], initial_state["current_verse"], initial_state["last_updated"], initial_state["last_verse"], initial_state["last_verse_fr"]
+    return doc.get("current_surah", 1), doc.get("current_verse", 1), doc.get("last_updated", "1970-01-01"), doc.get("last_verse", None), doc.get("last_verse_fr", None)
 
 def update_current_state(surah, verse, verse_data, verse_data_fr):
-    """Update the current state in PostgreSQL."""
+    """Update the current state in MongoDB."""
     local_tz = pytz.timezone("US/Eastern")
-    local_syd_tz = pytz.timezone("Australia/Sydney")
-
     last_updated = datetime.now(local_tz).strftime("%Y-%m-%d")
-    last_updated_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
 
-    with conn.cursor() as cursor:
-        cursor.execute(
-            """
-            UPDATE quraan
-            SET current_surah = %s,
-                current_verse = %s,
-                last_updated = %s,
-                last_updated_syd = %s,
-                last_verse = %s,
-                last_verse_fr = %s;
-            """,
-            (
-                surah,
-                verse,
-                last_updated,
-                last_updated_syd,
-                json.dumps(verse_data),
-                json.dumps(verse_data_fr),
-            ),
-        )
-        conn.commit()
+    persistence_collection.update_one(
+        {},
+        {
+            "$set": {
+                "current_surah": surah,
+                "current_verse": verse,
+                "last_updated": last_updated,
+                "last_verse": verse_data,
+                "last_verse_fr": verse_data_fr,
+            }
+        },
+        upsert=True
+    )
 
 def fetch_verse(surah, verse, translation_key):
     """Fetch verse data from the QuranEnc API."""
@@ -113,13 +81,7 @@ def fetch_verse(surah, verse, translation_key):
 
 @app.route("/daily-verse", methods=["GET"])
 def daily_verse():
-    current_state = get_current_state()
-    current_surah = current_state["current_surah"]
-    current_verse = current_state["current_verse"]
-    last_updated = current_state["last_updated"]
-    last_updated_syd = current_state["last_updated_syd"]
-    last_verse = current_state["last_verse"]
-    last_verse_fr = current_state["last_verse_fr"]
+    current_surah, current_verse, last_updated, last_verse, last_verse_fr = get_current_state()
 
     # US/Eastern timezone logic for daily verse API
     local_tz = pytz.timezone("US/Eastern")
@@ -136,7 +98,6 @@ def daily_verse():
             next_surah = current_surah + 1 if current_surah < 114 else 1
             next_verse = 1
 
-
         if not verse_data or not verse_data_fr:
             return jsonify({"error": "Failed to fetch verse data."}), 500
 
@@ -150,11 +111,6 @@ def daily_verse():
         )
 
     response.headers["Cache-Control"] = "no-store"
-    '''
-    url = f"https://quranenc.com/api/v1/translation/aya/french_montada/2/282"
-    response = requests.get(url)
-    return response.json()
-    '''
     return response
 
 if __name__ == "__main__":
