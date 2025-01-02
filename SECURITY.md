@@ -12,7 +12,7 @@ We are committed to addressing security vulnerabilities for the following versio
 We take security vulnerabilities seriously. If you discover a vulnerability in MyDailyReminder, please follow the steps below to report it securely:
 
 1. **Do not disclose publicly**: To ensure the vulnerability is not exploited before it is fixed, refrain from sharing it publicly.
-2. **Contact us directly**: Send an email with detailed information about the vulnerability to **[mydailyreminder24@gmail.com]**.
+2. **Contact us directly**: Send an email with detailed information about the vulnerability to **mydailyreminder24@gmail.com**.
 3. **Provide details**: Include the following in your report:
    - A description of the vulnerability.
    - Steps to reproduce the issue.
