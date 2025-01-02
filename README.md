@@ -1,92 +1,72 @@
-# 🌟 MyDailyHadith
+# 🌟 MyDailyReminder
+
+**Visit our platform: [mydailyreminder.ca](https://mydailyreminder.ca)**
 
 This project embodies the noble Hadith:
 
 > **"May Allah brighten the person who hears something from us and conveys it as he heard it, for perhaps the one to whom it is conveyed is more mindful than the hearer."**
 <sub>[Authentic Hadith Narrated by At-Termedhy & Others - Sunan At-Termedhy - 2657]</sub>
 
-MyDailyHadith automates the sharing of a daily Hadeeth in Arabic, English and French. The app leverages Flask for the backend and React for the frontend, serving as a platform to disseminate authentic Islamic knowledge effectively. This project is powered by the [HadeethEnc API](https://hadeethenc.com/en/home) and utilizes the Hadeeth dataset provided by them. **Note**: We will be pulling the most recent dataset everynow and then.
+MyDailyReminder is a comprehensive Islamic knowledge platform that aims to make authentic Islamic content more accessible to Muslims worldwide. Our family of applications serves as a bridge between technology and Islamic knowledge dissemination.
 
-![MyDailyHadith](./mydailyhadith-frontend/public/MDHdemo.gif)
+## 🕌 Our Services
 
-**Check it out at:** [https://my-daily-hadith.vercel.app/](https://my-daily-hadith.vercel.app/)
+### 📖 MyDailyVerse
+Daily Quranic verses with translations and insights in multiple languages. Access profound verses with authentic translations and scholarly interpretations to deepen your connection with the Quran.
 
----
+**Visit: [verse.mydailyreminder.ca](https://verse.mydailyreminder.ca)**
 
-## 🕌 **Purpose of the Project**
-This project aims to spread beneficial knowledge through the daily sharing of Hadith, as inspired by the teachings of the Prophet Muhammad ﷺ. By facilitating easy access to Hadith, we hope to encourage reflection and practice.
+### 🌟 MyDailyHadith
+Authentic hadiths with explanations and insights in multiple languages. Receive daily wisdom from the Prophet Muhammad ﷺ with verified sources and comprehensive explanations.
 
----
+**Visit: [hadith.mydailyreminder.ca](https://hadith.mydailyreminder.ca)**
 
-## **Features**
-- **Daily Hadeeth**: A new Hadeeth is served daily in Arabic, English, and French.
-- **Metadata and Explanations**: Includes grade, attribution, and an explanation for better understanding.
-- **Email Subscription**: Users can subscribe to receive the daily Hadeeth via email.
-- **Optimized API Usage**: Avoids unnecessary API calls by persisting daily Hadeeth data.
-- **Responsive Design**: Optimized for both desktop and mobile experiences.
-- **Display Mode**: A scrolling effect for seamless viewing on public screens or digital displays, making it ideal for masjids or Islamic centers.
-- **Secure Data Management**: Hadeeth data is securely stored and managed using MongoDB.
+### 📱 Mobile Application (Coming Soon)
+Take your daily reminders wherever you go! Our upcoming mobile application will combine the features of both MyDailyVerse and MyDailyHadith in a seamless, user-friendly interface.
 
----
+## ✨ Key Features
 
-## **How to Run the Project**
+- **100% Free**: Access all resources completely free of charge
+- **Authentic Sources**: All content is verified from authentic Islamic sources
+- **Personal Growth**: Enhance your Islamic knowledge at your own pace
+- **Multilingual Support**: Access content in multiple languages
+- **User-Friendly Interface**: Easy-to-navigate platform
+- **Regular Updates**: Continuously updated content
+- **Email Subscriptions**: Receive daily reminders directly in your inbox
+- **Display Mode**: Perfect for Masjids and Islamic centers
+- **Secure Data Management**: Your data is handled with utmost care
 
-### **1. Backend Setup**
+## 🤝 Contributing
 
-#### Prerequisites:
-- Python 3.7+
+We welcome contributions from the community! Whether you're a developer, designer, or content expert, there are many ways to help improve MyDailyReminder:
 
-#### Steps:
-1. Clone the repository and navigate to the `backend` directory:
-   ```bash
-   git clone <repository-url>
-   cd MyDailyHadeeth/backend
-   ```
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Run the Flask server:
-   ```bash
-   python app.py
-   ```
-4. The backend will be available at `http://127.0.0.1:5000`.
+- Report bugs and suggest features through [GitHub Issues](https://github.com/AhmedAlRawi0/MyDailyReminder/issues)
+- Submit pull requests for bug fixes and improvements
+- Help with translations and content verification
+- Share feedback and suggestions
 
----
+## 📧 Contact Us
 
-### **2. Frontend Setup**
+- **Email**: [contact@mydailyreminder.ca](mailto:mydailyreminder24@gmail.com)
+- **LinkedIn**: [MyDailyReminder](https://www.linkedin.com/company/mydailyreminder)
 
-#### Prerequisites:
-- Node.js and npm
+## 🙏 Special "Jazakum Allahu Khairan"
 
-#### Steps:
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd ../frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the React app:
-   ```bash
-   npm start
-   ```
-4. Access the frontend at `http://localhost:3000`.
+- [HadeethEnc](https://hadeethenc.com) for providing authentic Hadith content and API access
+- [QuraanEnc](https://quranenc.com) for their comprehensive Quranic database
+- Our growing community of users and contributors
+- All the scholars and translators whose work makes this project possible
+
+## 📝 License
+
+This project is licensed under the MIT License. Feel free to use and modify the code while maintaining attribution.
+
+## 🎥 Demo
+
+Below is a demo of MyDailyHadith, one of our core services:
+
+![MyDailyHadith Demo](./mydailyhadith-frontend/public/MDHdemo.gif)
 
 ---
 
-## **🌍 Deployment**
-- **Frontend**: Hosted on [Vercel](https://vercel.com/).
-- **Backend**: Hosted on [Render](https://render.com/).
-
----
-
-## **🛠️ Future Enhancements**
-- Stay tuned for **MyDailyVerse** And the mobile application of **MyDailyHadith**! 🌟 
-- Also, Check our [Github Issues](https://github.com/AhmedAlRawi0/MyDailyHadith/issues)
-
----
-
-## **🔗 License**
-This project is licensed under the MIT License. Feel free to use, fork, and contribute.
+*"The best of people are those who are most beneficial to people." - Prophet Muhammad ﷺ*
