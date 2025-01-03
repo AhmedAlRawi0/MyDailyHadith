@@ -5,9 +5,32 @@ const AnnouncementBanner = ({ language, onClose }) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const bannerMessage =
-    language === "English"
-      ? "🚀 This website is still being improved. Stay tuned for MyDailyVerse and MyDailyHadith mobile app! 🌟"
-      : "🚀 Ce site est encore en cours d'amélioration. Restez à l'écoute pour MyDailyVerse et l'application mobile MyDailyHadith! 🌟";
+    language === "English" ? (
+      <>
+        🚀 This website is still being improved. Check out our sister project{" "}
+        <a
+          href="https://verse.mydailyreminder.ca"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MyDailyVerse
+        </a>
+        ! Stay tuned for MyDailyReminder mobile app! 🌟
+      </>
+    ) : (
+      <>
+        🚀 Ce site est encore en cours d'amélioration. Découvrez notre projet
+        associé{" "}
+        <a
+          href="https://verse.mydailyreminder.ca"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MyDailyVerse
+        </a>
+        ! Restez à l'écoute pour l'application mobile MyDailyReminder! 🌟
+      </>
+    );
 
   const handleCloseBanner = () => {
     setShowBanner(false);
