@@ -1,11 +1,19 @@
-import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import AboutPage from "../../pages/AboutPage";
 import LandingPage from "../../pages/LandingPage";
 import TermsPage from "../../pages/TermsPage";
+import { scrollToTop } from "../../utils/scrollUtils";
 import { GitHubIcon } from "../Icons";
 
 const Footer = () => {
+  const location = useLocation();
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    scrollToTop();
+  }, [location.pathname]);
+
   return (
     <>
       <Routes>
@@ -19,7 +27,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
             <div>
               <h3 className="text-lg font-semibold mb-4 text-emerald-400">
-              Services
+                Services
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -54,6 +62,7 @@ const Footer = () => {
                   <Link
                     to="/about"
                     className="hover:text-emerald-400 transition"
+                    onClick={scrollToTop}
                   >
                     About Us
                   </Link>
@@ -62,6 +71,7 @@ const Footer = () => {
                   <Link
                     to="/terms"
                     className="hover:text-emerald-400 transition"
+                    onClick={scrollToTop}
                   >
                     Terms & Conditions
                   </Link>

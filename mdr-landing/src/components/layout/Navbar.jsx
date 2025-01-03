@@ -4,11 +4,11 @@ const Navbar = memo(function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: "about", label: "About" },
+    { id: "about", label: "Journey" },
     { id: "services", label: "Services" },
     { id: "features", label: "Features" },
     { id: "use", label: "Uses" },
-    { id: "contact", label: "Contact" },
+    { id: "contact", label: "Connect" },
   ];
 
   return (
@@ -30,6 +30,7 @@ const Navbar = memo(function Navbar() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden text-gray-700 hover:text-emerald-500"
+              aria-label="Toggle menu"
             >
               <svg
                 className="w-6 h-6"

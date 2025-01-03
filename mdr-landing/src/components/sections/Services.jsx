@@ -5,7 +5,7 @@ const handleNavigate = (url) => {
 };
 
 const Services = () => (
-  <section id="services" className="py-20 bg-slate-800">
+  <section id="services" className="py-16 bg-slate-800">
     <div className="container mx-auto px-4">
       <h2
         className="text-4xl font-bold text-center text-white mb-16"
@@ -33,9 +33,7 @@ const Services = () => (
               languages.
             </p>
             <button
-              onClick={() =>
-                handleNavigate("https://verse.mydailyreminder.ca")
-              }
+              onClick={() => handleNavigate("https://verse.mydailyreminder.ca")}
               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
             >
               Visit MyDailyVerse
