@@ -5,10 +5,32 @@ const AnnouncementBanner = ({ language, onClose }) => {
   const [showBanner, setShowBanner] = useState(true);
 
   const bannerMessage =
-    language === "English"
-      ? "🚀 This website is still being improved. Stay tuned for MyDailyReminder mobile app! 🌟"
-      : "🚀 Ce site est encore en cours d'amélioration. Restez à l'écoute pour l'application mobile MyDailyReminder! 🌟";
-
+    language === "English" ? (
+      <>
+        🚀 This website is still being improved. Check out our sister project{" "}
+        <a
+          href="https://hadith.mydailyreminder.ca"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MyDailyHadith
+        </a>
+        ! Stay tuned for MyDailyReminder mobile app! 🌟
+      </>
+    ) : (
+      <>
+        🚀 Ce site est encore en cours d'amélioration. Découvrez notre projet
+        associé{" "}
+        <a
+          href="https://hadith.mydailyreminder.ca"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          MyDailyHadith
+        </a>
+        ! Restez à l'écoute pour l'application mobile MyDailyReminder! 🌟
+      </>
+    );
   const handleCloseBanner = () => {
     setShowBanner(false);
     if (onClose) onClose(); // Optional callback
