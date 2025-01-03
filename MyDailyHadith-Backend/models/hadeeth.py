@@ -8,14 +8,22 @@ from datetime import datetime
 def fetch_hadeeth(hadeeth_id):
     url_en = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=en"
     url_fr = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=fr"
+    url_ar = f"https://hadeethenc.com/api/v1/hadeeths/one/?id={hadeeth_id}&language=ar"
     response_en = requests.get(url_en)
     response_fr = requests.get(url_fr)
-    if response_en.status_code == 200 and response_fr.status_code == 200:
-        return response_en.json(), response_fr.json()
-    elif response_en.status_code == 200:
-        return response_en.json()
-    elif response_fr.status_code == 200:
-        return response_fr.json()
+    response_ar = requests.get(url_ar)
+    response_en_data = response_en.json()
+    response_fr_data = response_fr.json()
+    if response_en.status_code == 200 and response_fr.status_code == 200 and response_ar.status_code == 200:
+        response_en_data["reference"] = response_ar.json().get("reference")
+        response_fr_data["reference"] = response_ar.json().get("reference")
+        return response_en_data, response_fr_data
+    elif response_en.status_code == 200 and response_ar.status_code == 200:
+        response_en_data["reference"] = response_ar.json().get("reference")
+        return response_en_data
+    elif response_fr.status_code == 200 and response_ar.status_code == 200:
+        response_fr_data["reference"] = response_ar.json().get("reference")
+        return response_fr_data
     return None
 
 # Function to send daily hadeeth to all subscribers

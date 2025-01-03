@@ -44,6 +44,13 @@ const ArabicHadeeth = ({ hadeeth }) => {
           </ul>
         </>
       )}
+
+      <section className="reference mt-4">
+        <h3 className="text-lg font-medium text-blue-600">المصدر:</h3>
+        <p className="text-gray-700 text-sm leading-relaxed">
+          {hadeeth.reference}
+        </p>
+      </section>
     </section>
   );
 };

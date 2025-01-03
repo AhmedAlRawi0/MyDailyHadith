@@ -50,8 +50,9 @@
 
 .metadata,
 .explanation,
-.hints ul {
-  color: #555555;
+.hints ul,
+.reference {
+  color: #000000;
 }
 
 .metadata-inline {
