@@ -3,8 +3,8 @@ from flask_cors import CORS
 from datetime import datetime
 from hadith_ids import get_ids_list
 import pytz
-from models.database import add_subscriber, remove_subscriber, get_current_state, update_current_state
-from models.hadeeth import fetch_hadeeth, send_daily_hadith
+from models.database import add_subscriber, remove_subscriber, get_current_hadith_state, update_current_hadith_state
+from models.hadeeth import fetch_hadeeth, send_daily_reminder
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
@@ -38,14 +38,14 @@ def unsubscribe():
 # Endpoint to send emails
 @app.route('/send-email', methods=['GET'])
 def sendEmail():
-    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_state()
+    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_hadith_state()
 
     local_syd_tz = pytz.timezone('Australia/Sydney')
     today_syd = datetime.now(local_syd_tz).strftime("%Y-%m-%d")
 
     if today_syd != last_updated_syd: # API call at 8am EST to send daily hadith
-       send_daily_hadith()
-       update_current_state(current_index, last_hadeeth, last_hadeeth_fr)
+       send_daily_reminder()
+       update_current_hadith_state(current_index, last_hadeeth, last_hadeeth_fr)
        return jsonify({"message": "Email sent to subscribers"}), 200
     else:
         return jsonify({"message": "Email already sent today"}), 400
@@ -53,7 +53,7 @@ def sendEmail():
 # Endpoint to get the daily hadeeth
 @app.route('/daily-hadeeth', methods=['GET'])
 def daily_hadeeth():
-    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_state()
+    current_index, last_updated, last_updated_syd, last_hadeeth, last_hadeeth_fr = get_current_hadith_state()
         
     local_tz = pytz.timezone('US/Eastern')
     today = datetime.now(local_tz).strftime("%Y-%m-%d")
@@ -69,7 +69,7 @@ def daily_hadeeth():
             hadeeth_data_fr = hadeeth_data
 
         next_index = (current_index + 1) % len(hadeeth_ids)
-        update_current_state(next_index, hadeeth_data, hadeeth_data_fr)
+        update_current_hadith_state(next_index, hadeeth_data, hadeeth_data_fr)
 
         # Since we are preserving data in the localStorage in the frontend, we need to send the same data from the previous session based on the language selected.
         response = make_response(jsonify(hadeeth_data_fr if language == 'French' else hadeeth_data)) 

@@ -7,7 +7,7 @@ from config import SMTP_SERVER, SMTP_PORT, EMAIL_ADDRESS, EMAIL_PASSWORD
 def send_email(to_email, subject, body):
     try:
         # Specify the sender's name and email
-        sender_name = "MyDailyHadith"
+        sender_name = "MyDailyReminder"
         sender_email = EMAIL_ADDRESS
         
         message = MIMEMultipart()

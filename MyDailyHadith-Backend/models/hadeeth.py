@@ -1,8 +1,13 @@
 import requests
-from models.database import get_current_state, get_subscribers
+from models.database import get_current_hadith_state, get_current_verse_state, get_subscribers
 from models.email import send_email
 import pytz
 from datetime import datetime
+import json
+
+# Load surah_names.json
+with open("surah_names.json", "r") as file:
+    QURAN_DATA = json.load(file)
 
 # Function to fetch hadeeth data from the API
 def fetch_hadeeth(hadeeth_id):
@@ -27,14 +32,15 @@ def fetch_hadeeth(hadeeth_id):
     return None
 
 # Function to send daily hadeeth to all subscribers
-def send_daily_hadith():
+def send_daily_reminder():
     subscribers = get_subscribers()  # Get all subscriber emails from the database
     if not subscribers:
         print("No subscribers to send the email to.")
         return
 
     # Get the current state
-    current_index, last_updated, last_updated_syd, hadeeth, hadeeth_fr = get_current_state()
+    current_index, last_updated, last_updated_syd, hadeeth, hadeeth_fr = get_current_hadith_state()
+    current_surah, current_verse, last_updated_verse, verse, verse_fr = get_current_verse_state()
 
     # Get today's date in a readable format
     local_tz = pytz.timezone('US/Eastern')
@@ -49,7 +55,13 @@ def send_daily_hadith():
         <!DOCTYPE html>
         <html lang="en">
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Daily Verse and Hadith</title>
             <style>
+                @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+
+                /* General Styles */
                 body {{
                     font-family: 'Arial', sans-serif;
                     margin: 0;
@@ -57,15 +69,24 @@ def send_daily_hadith():
                     background: linear-gradient(to bottom, #f7f2e9, #eae7dc);
                     color: #333;
                 }}
+
                 .container {{
                     max-width: 800px;
                     margin: 30px auto;
                     background-color: #fff;
-                    border: 10px solid #d4af37;
                     border-radius: 12px;
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                     padding: 20px;
                 }}
+
+                .container-gold {{
+                    border: 10px solid #d4af37;
+                }}
+
+                .container-pink {{
+                    border: 10px solid #9b5e5e;
+                }}
+
                 h1 {{
                     font-family: 'Amiri', serif;
                     text-align: center;
@@ -76,6 +97,12 @@ def send_daily_hadith():
                     border-bottom: 2px solid #d4af37;
                     padding-bottom: 5px;
                 }}
+
+                .h1-pink {{
+                    color: #9b5e5e;
+                    border-color: #9b5e5e;
+                }}
+
                 h2 {{
                     font-family: 'Amiri', serif;
                     font-size: 20px;
@@ -83,6 +110,7 @@ def send_daily_hadith():
                     margin-bottom: 10px;
                     text-decoration: underline;
                 }}
+
                 p {{
                     font-family: 'Amiri', serif;
                     font-size: 16px;
@@ -90,6 +118,7 @@ def send_daily_hadith():
                     color: #34495e;
                     margin-bottom: 15px;
                 }}
+
                 .date {{
                     text-align: center;
                     font-size: 14px;
@@ -97,6 +126,7 @@ def send_daily_hadith():
                     margin-bottom: 20px;
                     font-style: italic;
                 }}
+
                 .arabic {{
                     font-family: 'Amiri', serif;
                     font-size: 18px;
@@ -106,57 +136,92 @@ def send_daily_hadith():
                     padding: 10px;
                     margin-bottom: 15px;
                 }}
+
                 .separator {{
                     width: 100%;
                     height: 2px;
-                    background: #d4af37;
                     margin: 15px 0;
                 }}
+
+                .separator-gold {{
+                    background: #d4af37;
+                }}
+
+                .separator-pink {{
+                    background: #9b5e5e;
+                }}
+
                 .footer {{
                     text-align: center;
                     font-size: 12px;
                     color: #7f8c8d;
                     margin-top: 20px;
                 }}
+
                 .footer a {{
                     color: #3498db;
                     text-decoration: none;
                 }}
+
                 .footer a:hover {{
                     text-decoration: underline;
                 }}
             </style>
         </head>
         <body>
-            <div class="container">
+            <!-- Daily Verse Section -->
+            <div class="container container-pink">
+                <h1 class="h1-pink">Daily Verse</h1>
+                <h2 style="text-align: right; direction: rtl;">الآية:</h2>
+                <p class="arabic">{verse['result']['arabic_text']}</p>
+                <p class="arabic">
+                    <strong>السورة:</strong> {QURAN_DATA[str(verse['result']['sura'])]["arabic"]}،{" "}
+                    <strong>رقم الآية:</strong> {verse['result']['aya']}
+                </p>
+                <div class="separator separator-pink"></div>
+                <h2>The Verse:</h2>
+                <p>{verse['result']['translation']}</p>
+                <p>
+                    <strong>Sura:</strong> {QURAN_DATA[str(verse['result']['sura'])]["english"]},{" "}
+                    <strong>Aya:</strong> {verse['result']['aya']}
+                </p>
+                <div class="separator separator-pink"></div>
+                <h2>Le Verset:</h2>
+                <p>{verse_fr['result']['translation']}</p>
+                <p>
+                    <strong>Sura:</strong> {QURAN_DATA[str(verse['result']['sura'])]["english"]},{" "}
+                    <strong>Aya:</strong> {verse['result']['aya']}
+                </p>
+            </div>
+
+            <!-- Daily Hadith Section -->
+            <div class="container container-gold">
                 <h1>Daily Hadith</h1>
-                <p class="date">{today_date}</p>
-                <div class="separator"></div>
                 <h2 style="text-align: right; direction: rtl;">الحديث:</h2>
-                <p class="arabic">{hadeeth.get('hadeeth_ar')}</p>
+                <p class="arabic">{hadeeth['hadeeth_ar']}</p>
                 <h2 style="text-align: right; direction: rtl;">الشرح:</h2>
-                <p class="arabic">{hadeeth.get('explanation_ar')}</p>
-                <div class="separator"></div>
+                <p class="arabic">{hadeeth['explanation_ar']}</p>
+                <div class="separator separator-gold"></div>
                 <h2>The Hadith:</h2>
-                <p>{hadeeth.get('hadeeth')}</p>
+                <p>{hadeeth['hadeeth']}</p>
                 <h2>Explanation:</h2>
-                <p>{hadeeth.get('explanation')}</p>
-                <div class="separator"></div>
+                <p>{hadeeth['explanation']}</p>
+                <div class="separator separator-gold"></div>
                 <h2>Le Hadith:</h2>
-                <p>{hadeeth_fr.get('hadeeth')}</p>
+                <p>{hadeeth_fr['hadeeth']}</p>
                 <h2>Explication:</h2>
-                <p>{hadeeth_fr.get('explanation')}</p>
-                <div class="separator"></div>
-                <div class="footer">
+                <p>{hadeeth_fr['explanation']}</p>   
+            </div>
+            <div class="separator separator-gold"></div>
+            <div class="footer">
                     <p>
-                        © {datetime.now().year} MyDailyHadith | 
-                        <a href="https://my-daily-hadith.vercel.app">Visit Website</a> | 
+                        © {datetime.now().year} MyDailyReminder | 
+                        <a href="https://mydailyreminder.ca">Visit Website</a> | 
                         <a href="{unsubscribe_link}">Unsubscribe</a>
                     </p>
                 </div>
-            </div>
         </body>
         </html>
         """
 
-        send_email(to_email, f"Daily Hadith - {today_date}", email_body)
+        send_email(to_email, f"Daily Reminder - {today_date}", email_body)

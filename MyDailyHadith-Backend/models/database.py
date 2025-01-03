@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
-from pymongo.errors import DuplicateKeyError
-from config import MONGO_URI, DB_NAME
+from pymongo.errors import DuplicateKeyError, OperationFailure
+from config import MONGO_URI, HADEETH_DB_NAME, QURAAN_DB_NAME, SUBSCRIBERS_DB_NAME
 from datetime import datetime
 import pytz
 
@@ -15,12 +15,22 @@ try:
 except Exception as e:
     print(e)
 
-db = client[DB_NAME]
-persistence_collection = db['persistence']
-subscribers_collection = db['subscribers']
+hadeeth_db = client[HADEETH_DB_NAME]
+hadeeth_collection = hadeeth_db['persistence']
+quraan_db = client[QURAAN_DB_NAME]
+quraan_collection = quraan_db['quraan-persistence']
+subscribers_db = client[SUBSCRIBERS_DB_NAME]
+subscribers_collection = subscribers_db['subscribers']
 
-# Function to initialize the state of the MongoDB
-def initialize_state():
+# Ensure a unique index on the email field
+try:
+    subscribers_collection.create_index("email", unique=True)
+    print("Unique index on 'email' created.")
+except OperationFailure as e:
+    print(f"Failed to create unique index: {e}")
+
+# Function to initialize the hadith state of the MongoDB
+def initialize_state_hadith():
     initial_state = {
         "current_index": 0,
         "last_updated": "1970-01-01",
@@ -28,21 +38,40 @@ def initialize_state():
         "last_hadeeth": None,
         "last_hadeeth_fr": None
     }
-    persistence_collection.insert_one(initial_state)
+    hadeeth_collection.insert_one(initial_state)
     return initial_state["current_index"], initial_state["last_updated"], initial_state["last_updated_syd"], initial_state["last_hadeeth"], initial_state["last_hadeeth_fr"]
 
-# Function to get the current state from MongoDB
-def get_current_state():
-    doc = persistence_collection.find_one()
+# Function to initialize the hadith state of the MongoDB
+def initialize_state_verse():
+    initial_state = {
+        "current_surah": 1,
+        "current_verse": 1,
+        "last_updated": "1970-01-01",
+        "last_verse": None,
+        "last_verse_fr": None,
+    }
+    quraan_collection.insert_one(initial_state)
+    return initial_state["current_surah"], initial_state["current_verse"], initial_state["last_updated"], initial_state["last_verse"], initial_state["last_verse_fr"]
+
+# Function to get the current hadith state from MongoDB
+def get_current_hadith_state():
+    doc = hadeeth_collection.find_one()
     if not doc:
-        return initialize_state()
+        return initialize_state_hadith()
     return doc.get("current_index", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_updated_syd", "1970-01-01"), doc.get("last_hadeeth", None), doc.get("last_hadeeth_fr", None)
 
-# Function to update the current state in MongoDB
-def update_current_state(index, hadeeth_data, hadeeth_data_fr):
+# Function to get the current quraan state from MongoDB
+def get_current_verse_state():
+    doc = quraan_collection.find_one()
+    if not doc:
+        return initialize_state_verse()
+    return doc.get("current_surah", 0), doc.get("current_verse", 0), doc.get("last_updated", "1970-01-01"), doc.get("last_verse", None), doc.get("last_verse_fr", None)
+
+# Function to update the current hadith state in MongoDB
+def update_current_hadith_state(index, hadeeth_data, hadeeth_data_fr):
     local_tz = pytz.timezone('US/Eastern')
     syd_tz = pytz.timezone('Australia/Sydney')
-    persistence_collection.update_one(
+    hadeeth_collection.update_one(
         {},
         {
             "$set": {
