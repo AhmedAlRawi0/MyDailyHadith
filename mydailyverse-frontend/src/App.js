@@ -127,7 +127,7 @@ const App = () => {
   };
 
   if (error) {
-    return <Error message={error} email="your.daily.verse.reminder@gmail.com" />;
+    return <Error message={error} email="mydailyreminder24@gmail.com" />;
   }
 
   if (!verse) {
