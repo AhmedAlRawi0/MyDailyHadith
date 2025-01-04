@@ -47,7 +47,7 @@ We welcome contributions from the community! Whether you're a developer, designe
 
 ## 📧 Contact Us
 
-- **Email**: [contact@mydailyreminder.ca](mailto:mydailyreminder24@gmail.com)
+- **Email**: [mydailyreminder24@gmail.com](mailto:mydailyreminder24@gmail.com)
 - **LinkedIn**: [MyDailyReminder](https://www.linkedin.com/company/mydailyreminder)
 
 ## 🙏 Special "Jazakum Allahu Khairan"
