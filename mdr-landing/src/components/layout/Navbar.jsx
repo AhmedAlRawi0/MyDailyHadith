@@ -4,11 +4,11 @@ const Navbar = memo(function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { id: "about", label: "Journey" },
+    { id: "journey", label: "Journey" },
     { id: "services", label: "Services" },
     { id: "features", label: "Features" },
-    { id: "use", label: "Uses" },
-    { id: "contact", label: "Connect" },
+    { id: "uses", label: "Uses" },
+    { id: "connect", label: "Connect" },
   ];
 
   return (

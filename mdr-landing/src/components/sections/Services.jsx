@@ -34,7 +34,7 @@ const Services = () => (
             </p>
             <button
               onClick={() => handleNavigate("https://verse.mydailyreminder.ca")}
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+              className="w-full bg-emerald-500 text-white py-2 rounded hover:bg-emerald-600 transition"
             >
               Visit MyDailyVerse
             </button>
@@ -61,10 +61,8 @@ const Services = () => (
               languages.
             </p>
             <button
-              onClick={() =>
-                handleNavigate("https://hadith.mydailyreminder.ca")
-              }
-              className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition"
+              onClick={() => handleNavigate("https://hadith.mydailyreminder.ca")}
+              className="w-full bg-emerald-500 text-white py-2 rounded hover:bg-emerald-600 transition"
             >
               Visit MyDailyHadith
             </button>
