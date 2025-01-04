@@ -1,4 +1,4 @@
-# 🌟 MyDailyReminder !
+# 🌟 MyDailyReminder
 
 **Visit our platform: [mydailyreminder.ca](https://mydailyreminder.ca)**
 
