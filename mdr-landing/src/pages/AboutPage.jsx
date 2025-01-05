@@ -27,10 +27,10 @@ const AboutPage = () => {
                 Features
               </h2>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-3">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-8">
+                  <div className="bg-slate-700/50 p-6 rounded-lg h-[220px]">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Daily Hadith
                     </h3>
                     <ul className="list-disc pl-6 space-y-2 text-gray-300">
@@ -41,38 +41,41 @@ const AboutPage = () => {
                     </ul>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-3">
+                  <div className="bg-slate-700/50 p-6 rounded-lg h-[220px]">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Daily Quranic Verse
                     </h3>
                     <ul className="list-disc pl-6 space-y-2 text-gray-300">
                       <li>Quranic verses with translations</li>
                       <li>Comprehensive Tafseer and footnotes</li>
                       <li>Enhanced readability and engagement</li>
+                      <li>Regular updates with new verses</li>
                     </ul>
                   </div>
                 </div>
 
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-3">
+                <div className="space-y-8">
+                  <div className="bg-slate-700/50 p-6 rounded-lg h-[220px]">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Interactive UI
                     </h3>
                     <ul className="list-disc pl-6 space-y-2 text-gray-300">
                       <li>Responsive design for all devices</li>
                       <li>Seamless scrolling experience</li>
                       <li>Persistent user preferences</li>
+                      <li>Intuitive navigation system</li>
                     </ul>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-3">
+                  <div className="bg-slate-700/50 p-6 rounded-lg h-[220px]">
+                    <h3 className="text-xl font-semibold text-white mb-4">
                       Ease of Access
                     </h3>
                     <ul className="list-disc pl-6 space-y-2 text-gray-300">
                       <li>Global accessibility 24/7</li>
                       <li>Email subscription service</li>
                       <li>Mobile-friendly interface</li>
+                      <li>No registration required</li>
                     </ul>
                   </div>
                 </div>

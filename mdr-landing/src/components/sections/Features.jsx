@@ -10,7 +10,7 @@ import {
 import FeatureCard from "../ui/FeatureCard";
 
 const Features = () => (
-  <section id="features" className="py-20">
+  <section id="features" className="py-20 bg-slate-700">
     <div className="container mx-auto px-4">
       <h2 className="text-2xl md:text-4xl font-bold text-center mb-12 text-white">
         Key Features

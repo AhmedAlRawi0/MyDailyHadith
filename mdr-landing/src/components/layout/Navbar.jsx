@@ -8,6 +8,7 @@ const Navbar = memo(function Navbar() {
     { id: "services", label: "Services" },
     { id: "features", label: "Features" },
     { id: "uses", label: "Uses" },
+    { id: "subscribe", label: "Subscribe" },
     { id: "connect", label: "Connect" },
   ];
 

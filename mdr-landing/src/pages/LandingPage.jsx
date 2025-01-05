@@ -7,6 +7,7 @@ import Features from "../components/sections/Features";
 import Hero from "../components/sections/Hero";
 import Partners from "../components/sections/Partners";
 import Services from "../components/sections/Services";
+import Subscribe from "../components/sections/Subscribe";
 import UseCases from "../components/sections/UseCases";
 import WorkInProgressHint from "../components/ui/WorkInProgressHint";
 
@@ -26,6 +27,7 @@ const LandingPage = () => {
       <Features />
       <UseCases />
       <Partners />
+      <Subscribe />
       <Contact />
       <WorkInProgressHint />
     </div>
