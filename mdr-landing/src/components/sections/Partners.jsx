@@ -1,7 +1,7 @@
 import React from "react";
 
 const Partners = () => (
-  <section className="py-20 bg-slate-700">
+  <section className="py-20 bg-slate-800">
     <div className="container mx-auto px-4">
       <h2
         className="text-2xl md:text-4xl font-bold text-center text-white mb-16"
